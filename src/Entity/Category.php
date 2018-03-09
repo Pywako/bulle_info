@@ -17,22 +17,22 @@ class Category
     private $id;
 
     /**
-     * @ORM\Column(type="string", Length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="datetime", Length=100)
+     * @ORM\Column(type="datetime", length=100)
      */
     private $creation_date;
 
     /**
-     * @ORM\Column(type="datetime", Length=100)
+     * @ORM\Column(type="datetime", length=100)
      */
     private $update_date;
 
     /**
-     * @ORM\ManyToMany((targetEntity="App\Entity\Subject", inversedBy="categorys")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="categorys")
      */
     private $subjects;
 

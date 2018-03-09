@@ -17,12 +17,12 @@ class Resource
     private $id;
 
     /**
-     * @ORM\Column(type="string", Length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $title;
 
     /**
-     * @ORM\Column(type="string", Length=350)
+     * @ORM\Column(type="string", length=350)
      */
     private $summary;
 
@@ -42,7 +42,7 @@ class Resource
     private $relevance;
 
     /**
-     * @ORM\Column(type="string", Length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $tag;
 

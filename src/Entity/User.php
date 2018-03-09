@@ -17,17 +17,17 @@ class User
     private $id;
 
     /**
-     * @ORM\Column(type="string", Length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $first_name;
 
     /**
-     * @ORM\Column(type="string", Length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $last_name;
 
     /**
-     * @ORM\Column(type="string", Length=100)
+     * @ORM\Column(type="string", length=100)
      */
     private $email;
 
