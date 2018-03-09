@@ -27,7 +27,7 @@ class Alert
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alert")
+     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="alert")
      */
     private $user;
 

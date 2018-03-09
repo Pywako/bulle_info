@@ -33,6 +33,7 @@ class Category
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="categorys")
+     * @ORM\JoinColumn(name="subjects_id", referencedColumnName="id")
      */
     private $subjects;
 

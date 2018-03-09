@@ -48,17 +48,19 @@ class Resource
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
-     * @ORM\JoinColumn(nullable=true)
+     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="resources")
+     * @ORM\JoinColumn(name="subject_id", referencedColumnName="id")
      */
     private $subject;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Alert", inversedBy="resources")
+     * @ORM\JoinColumn(name="alerts_id", referencedColumnName="id")
      */
     private $alerts;
 

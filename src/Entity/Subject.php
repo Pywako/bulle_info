@@ -33,6 +33,7 @@ class Subject
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="subjects")
+     * @ORM\JoinColumn(name="users_id", referencedColumnName="id")
      */
     private $users;
 
@@ -42,7 +43,7 @@ class Subject
     private $categorys;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="subject")
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="subject", cascade="persist")
      */
     private $resources;
 
