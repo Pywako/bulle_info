@@ -30,7 +30,9 @@ class RegistrationController extends Controller
             $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
             $user->setPassword($password);
 
-            $user->setSubscriptionDate(date("dd/MM/yyyy HH:ii"));
+            $now =new \DateTime();
+            $user->setSubscriptionDate($now);
+            $user->setIsActive(true);
 
             $entityManager = $this->getDoctrine()->getManager();
             $entityManager->persist($user);
