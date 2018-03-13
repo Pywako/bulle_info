@@ -34,12 +34,6 @@ class User implements UserInterface, \Serializable
      */
     private $last_name;
 
-    /**
-     * @var string
-     *
-     * @ORM\Column(type="string", length=25, unique=true)
-     */
-    private $username;
 
     /**
      * @var string
@@ -129,20 +123,9 @@ class User implements UserInterface, \Serializable
         $this->last_name = $last_name;
     }
 
-    /**
-     * @return string
-     */
-    public function getUsername(): string
+    public function getUsername()
     {
-        return $this->username;
-    }
-
-    /**
-     * @param string $username
-     */
-    public function setUsername(string $username): void
-    {
-        $this->username = $username;
+        return $this->email;
     }
 
     /**
@@ -196,7 +179,7 @@ class User implements UserInterface, \Serializable
     {
         return serialize(array(
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
         ));
     }
@@ -205,7 +188,7 @@ class User implements UserInterface, \Serializable
     {
         list(
             $this->id,
-            $this->username,
+            $this->email,
             $this->password,
             ) = $this->unserialize($serialized);
     }
