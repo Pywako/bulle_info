@@ -3,13 +3,17 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Security\Core\User\UserInterface;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
+ * @ORM\Table(name="user")
  */
-class User
+class User implements UserInterface, \Serializable
 {
     /**
+     * @var int
+     *
      * @ORM\Id
      * @ORM\GeneratedValue
      * @ORM\Column(type="integer")
@@ -17,21 +21,50 @@ class User
     private $id;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100)
      */
     private $first_name;
 
     /**
+     * @var string
+     *
      * @ORM\Column(type="string", length=100)
      */
     private $last_name;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @var string
+     *
+     * @ORM\Column(type="string", length=25, unique=true)
+     */
+    private $username;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=64)
+     */
+    private $password;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(type="string", length=254, unique=true)
      */
     private $email;
 
     /**
+     * @var bool
+     *
+     * @ORM\Column(name="is_active", type="boolean")
+     */
+    private $isActive;
+
+    /**
+     * @var /Datetime
+     *
      * @ORM\Column(type="datetime")
      */
     private $subscription_date;
@@ -50,6 +83,11 @@ class User
      * @ORM\OneToOne(targetEntity="App\Entity\Alert", mappedBy="user")
      */
     private $alert;
+
+    public function construct()
+    {
+        $this->isActive = true;
+    }
 
     /**
      * @return mixed
@@ -92,6 +130,22 @@ class User
     }
 
     /**
+     * @return string
+     */
+    public function getUsername(): string
+    {
+        return $this->username;
+    }
+
+    /**
+     * @param string $username
+     */
+    public function setUsername(string $username): void
+    {
+        $this->username = $username;
+    }
+
+    /**
      * @return mixed
      */
     public function getEmail()
@@ -106,6 +160,72 @@ class User
     {
         $this->email = $email;
     }
+
+    /**
+     * @return string
+     */
+    public function getPassword(): string
+    {
+        return $this->password;
+    }
+
+    /**
+     * @param string $password
+     */
+    public function setPassword(string $password): void
+    {
+        $this->password = $password;
+    }
+
+    public function getSalt()
+    {
+        // TODO: Implement getSalt() method.
+        return null;
+    }
+
+    public function getRoles()
+    {
+        return array('ROLE_USER');
+    }
+
+    public function eraseCredentials()
+    {
+    }
+
+    public function serialize()
+    {
+        return serialize(array(
+            $this->id,
+            $this->username,
+            $this->password,
+        ));
+    }
+
+    public function unserialize($serialized)
+    {
+        list(
+            $this->id,
+            $this->username,
+            $this->password,
+            ) = $this->unserialize($serialized);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isActive(): bool
+    {
+        return $this->isActive;
+    }
+
+    /**
+     * @param bool $isActive
+     */
+    public function setIsActive(bool $isActive): void
+    {
+        $this->isActive = $isActive;
+    }
+
 
     /**
      * @return mixed
@@ -170,4 +290,5 @@ class User
     {
         $this->alert = $alert;
     }
+
 }
