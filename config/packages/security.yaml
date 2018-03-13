@@ -24,6 +24,14 @@ security:
 
             # https://symfony.com/doc/current/security.html#a-configuring-how-your-users-will-authenticate
 
+            form_login:
+                login_path: connexion
+                check_path: connexion
+
+            logout:
+                path: deconnexion
+                target: homepage
+
             # form_login: true
             # https://symfony.com/doc/current/security/form_login_setup.html
 
@@ -31,4 +39,5 @@ security:
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
+        - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }
