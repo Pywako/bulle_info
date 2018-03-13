@@ -72,7 +72,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $subscription_date;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @ORM\Column(type="json", nullable=true)
      *
      */
     private $roles;
@@ -95,6 +95,7 @@ class User implements AdvancedUserInterface, \Serializable
     public function construct()
     {
         $this->isActive = true;
+        $this->roles = [];
     }
 
     /**
@@ -205,9 +206,9 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $roles = $this->roles;
         if(empty($roles)){
-            $roles = 'ROLE_USER';
+            $roles[] = 'ROLE_USER';
         }
-        return $roles;
+        return array_unique($roles);
     }
 
     public function eraseCredentials()
