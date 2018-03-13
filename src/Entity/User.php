@@ -72,6 +72,12 @@ class User implements AdvancedUserInterface, \Serializable
     private $subscription_date;
 
     /**
+     * @ORM\Column(type="string", nullable=true)
+     *
+     */
+    private $roles;
+
+    /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Subject", mappedBy="users")
      */
     private $subjects;
@@ -190,9 +196,18 @@ class User implements AdvancedUserInterface, \Serializable
         return null;
     }
 
+    public function setRoles($roles)
+    {
+        $this->roles = $roles;
+    }
+
     public function getRoles()
     {
-        return array('ROLE_USER');
+        $roles = $this->roles;
+        if(empty($roles)){
+            $roles = 'ROLE_USER';
+        }
+        return $roles;
     }
 
     public function eraseCredentials()
