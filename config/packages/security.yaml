@@ -27,6 +27,11 @@ security:
             form_login:
                 login_path: connexion
                 check_path: connexion
+                csrf_token_generator: security.csrf.token_manager
+
+            logout:
+                path: deconnexion
+                target: homepage
 
             # form_login: true
             # https://symfony.com/doc/current/security/form_login_setup.html
@@ -36,9 +41,10 @@ security:
                 csrf_token_generator: security.csrf.token_manager
                 csrf_parameter: _csrf_security_token
                 csrf_token_id: _a_new_private_string
+
     # Easy way to control access for large sections of your site
     # Note: Only the *first* access control that matches will be used
     access_control:
         # - { path: ^/admin, roles: ROLE_ADMIN }
-         - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
+        - { path: ^/connexion, roles: IS_AUTHENTICATED_ANONYMOUSLY }
         # - { path: ^/profile, roles: ROLE_USER }

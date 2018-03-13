@@ -15,7 +15,7 @@ class SecurityController extends Controller
     /**
      * @Route("/connexion", name="connexion")
      */
-    public function loginAction(Request $request, AuthenticationUtils $authenticationUtils)
+    public function login(Request $request, AuthenticationUtils $authenticationUtils)
     {
         $authenticationError = $authenticationUtils->getLastAuthenticationError();
 
@@ -25,6 +25,13 @@ class SecurityController extends Controller
             'last_login' => $lastLogin,
             'error' =>$authenticationError,
         ));
+    }
 
+    /**
+     * @Route("/deconnexion", name="deconnexion")
+     */
+    public function logout()
+    {
+        throw new \Exception('La déconnexion a un soucis');
     }
 }
