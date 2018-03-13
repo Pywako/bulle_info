@@ -21,25 +21,22 @@ class User implements UserInterface, \Serializable
     private $id;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="first_name", type="string", length=100)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Le champs prénom doit être rempli")
      */
     private $firstName;
 
     /**
-     * @var string
      *
      * @ORM\Column(name="last_name", type="string", length=100)
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Le champs nom doit être rempli")
      */
     private $lastName;
 
     /**
-     * @var string
      *
-     * @Assert\NotBlank()
+     * @Assert\NotBlank(message="Les champs mot de passe doit être rempli")
      * @Assert\Length(max=4096)
      */
     private $plainPassword;
@@ -52,11 +49,10 @@ class User implements UserInterface, \Serializable
     private $password;
 
     /**
-     * @var string
      *
      * @ORM\Column(type="string", length=254, unique=true)
-     * @Assert\NotBlank()
-     * @Assert\Email()
+     * @Assert\NotBlank(message="Le champs email doit être rempli")
+     * @Assert\Email(message="veuillez entrer un email de type nom@email.com")
      */
     private $email;
 
@@ -103,9 +99,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
+     *
      */
-    public function getFirstName(): string
+    public function getFirstName()
     {
         return $this->firstName;
     }
@@ -119,9 +115,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
+     *
      */
-    public function getLastName(): string
+    public function getLastName()
     {
         return $this->lastName;
     }
@@ -156,9 +152,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
+     *
      */
-    public function getPlainPassword(): string
+    public function getPlainPassword()
     {
         return $this->plainPassword;
     }
@@ -172,9 +168,9 @@ class User implements UserInterface, \Serializable
     }
 
     /**
-     * @return string
+     *
      */
-    public function getPassword(): string
+    public function getPassword()
     {
         return $this->password;
     }
