@@ -16,6 +16,9 @@ security:
             security: false
         main:
             anonymous: true
+            form_login:
+                login_path: connexion
+                check_path: connexion
 
             # activate different ways to authenticate
             pattern: ^/
