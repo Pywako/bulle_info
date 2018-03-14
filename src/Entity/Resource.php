@@ -27,6 +27,11 @@ class Resource
     private $summary;
 
     /**
+     * @ORM\Column(type="string", length=350)
+     */
+    private $link;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $creation_date;
@@ -105,6 +110,21 @@ class Resource
         $this->summary = $summary;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link): void
+    {
+        $this->link = $link;
+    }
 
     /**
      * @return mixed
