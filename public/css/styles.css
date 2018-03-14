@@ -1,0 +1,20 @@
+#header_img{
+    height: 20%;
+    width: auto;
+    background-color: #eee;
+}
+
+#bloc_landing_page{
+    height: 80%;
+    width: 80%;
+}
+
+.bloc{
+    height: 20%;
+    margin-top: 5%;
+    margin-bottom: 3%;
+}
+
+.hr_small{
+    width: 20%;
+}

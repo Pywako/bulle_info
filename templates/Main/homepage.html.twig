@@ -1,19 +1,29 @@
 {% extends 'base.html.twig' %}
 {% block title %} Accueil {% endblock %}
+
+{% block h1 %}Bulle d'info{% endblock %}
+
 {% block main %}
-    <h1>Bulle d'info</h1>
-    <div>
-        <p>Un endroit pour trouver des réponses</p>
+<div>
+    <div class="bloc text-center">
+        <h2>Un endroit pour trouver des réponses</h2>
         <p>Trouver les informations qui vous conduiront aux solutions</p>
+        <hr class="hr_small">
     </div>
-    <div>
-        <p>Un endroit pour se "ressourcer"</p>
+
+    <div class="bloc text-center">
+        <h2>Un endroit pour se "ressourcer"</h2>
         <p>Des ressources utilies et pertinantes.<br/>
             pour aller encore plus loin</p>
+        <hr class="hr_small">
     </div>
-    <div>
-        <p>Un endroit pour partager</p>
+
+    <div class="bloc text-center">
+        <h2>Un endroit pour partager</h2>
         <p>Et si cet espace,<br/>
             on le construisait ensemble?</p>
+        <hr class="hr_small">
     </div>
+</div>
+
 {% endblock %}

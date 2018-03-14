@@ -12,8 +12,8 @@
         {% endblock %}
     </head>
     <body>
-
         <header>
+            <!------------ Navbar ------------>
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="{{ path('homepage') }}">Bulle Info</a>
                 <ul class="navbar-nav mr-auto">
@@ -62,14 +62,19 @@
                         </ul>
                     </div>
                 </div>
-
             </nav>
+            <div id="header_img" >
+                <img src="">
+            </div>
         </header>
         <main>
             <div class="container">
                 <h1 class="text-center">
                     {% block h1 %}{% endblock %}
                 </h1>
+
+                {% block breadcrumbs %}{% endblock %}
+
                 {% block main %}{% endblock %}
             </div>
         </main>
