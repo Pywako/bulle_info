@@ -58,7 +58,7 @@ class Resource
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="resources")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="subject_id", referencedColumnName="id")
      */
     private $subject;
