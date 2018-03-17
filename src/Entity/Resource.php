@@ -42,7 +42,7 @@ class Resource
     private $update_date;
 
     /**
-     * @ORM\Column(type="integer")
+     * @ORM\Column(type="integer", options={"default" : 0})
      */
     private $relevance;
 
@@ -52,7 +52,7 @@ class Resource
     private $tag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
@@ -64,7 +64,7 @@ class Resource
     private $subject;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Alert", inversedBy="resources")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Alert", inversedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="alerts_id", referencedColumnName="id")
      */
     private $alerts;
