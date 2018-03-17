@@ -16,8 +16,7 @@ class ResourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', SubjectType::class, array(
-            ))
+            ->add('subject', SubjectType::class)
             ->add('title', TextType::class, array(
                 'label' => 'Titre de la ressource'
             ))
