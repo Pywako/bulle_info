@@ -27,12 +27,12 @@ class Alert
     private $comment;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\User", inversedBy="alert")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alert")
      */
     private $user;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Resource", mappedBy="alerts")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="alert")
      */
     private $resources;
 

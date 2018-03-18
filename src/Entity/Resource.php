@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Resource
 {
+    const DEFAULT_RELEVANCE = 0;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -27,6 +28,11 @@ class Resource
     private $summary;
 
     /**
+     * @ORM\Column(type="string", length=350)
+     */
+    private $link;
+
+    /**
      * @ORM\Column(type="datetime")
      */
     private $creation_date;
@@ -39,7 +45,7 @@ class Resource
     /**
      * @ORM\Column(type="integer")
      */
-    private $relevance;
+    private $relevance = self::DEFAULT_RELEVANCE;
 
     /**
      * @ORM\Column(type="string", length=100)
@@ -47,22 +53,22 @@ class Resource
     private $tag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="resources")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="subject_id", referencedColumnName="id")
      */
     private $subject;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Alert", inversedBy="resources")
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="alerts_id", referencedColumnName="id")
      */
-    private $alerts;
+    private $alert;
 
 
     /**
@@ -105,6 +111,21 @@ class Resource
         $this->summary = $summary;
     }
 
+    /**
+     * @return mixed
+     */
+    public function getLink()
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param mixed $link
+     */
+    public function setLink($link): void
+    {
+        $this->link = $link;
+    }
 
     /**
      * @return mixed
@@ -207,17 +228,17 @@ class Resource
     /**
      * @return mixed
      */
-    public function getAlerts()
+    public function getAlert()
     {
-        return $this->alerts;
+        return $this->alert;
     }
 
     /**
-     * @param mixed $alerts
+     * @param mixed $alert
      */
-    public function setAlerts($alerts): void
+    public function setAlerts($alert): void
     {
-        $this->alerts = $alerts;
+        $this->alert = $alert;
     }
 
 }

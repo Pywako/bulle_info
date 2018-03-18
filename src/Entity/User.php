@@ -88,7 +88,7 @@ class User implements AdvancedUserInterface, \Serializable
     private $resources;
 
     /**
-     * @ORM\OneToOne(targetEntity="App\Entity\Alert", mappedBy="user")
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="user")
      */
     private $alert;
 
