@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Resource
 {
+    const DEFAULT_RELEVANCE = 0;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
@@ -42,9 +43,9 @@ class Resource
     private $update_date;
 
     /**
-     * @ORM\Column(type="integer", options={"default" = 0})
+     * @ORM\Column(type="integer")
      */
-    private $relevance;
+    private $relevance = self::DEFAULT_RELEVANCE;
 
     /**
      * @ORM\Column(type="string", length=100)
