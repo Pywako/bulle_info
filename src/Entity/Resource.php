@@ -42,7 +42,7 @@ class Resource
     private $update_date;
 
     /**
-     * @ORM\Column(type="integer", options={"default" : 0})
+     * @ORM\Column(type="integer", options={"default" = 0})
      */
     private $relevance;
 
@@ -64,10 +64,10 @@ class Resource
     private $subject;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Alert", inversedBy="resources", cascade={"persist"})
+     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="resources", cascade={"persist"})
      * @ORM\JoinColumn(name="alerts_id", referencedColumnName="id")
      */
-    private $alerts;
+    private $alert;
 
 
     /**
@@ -227,17 +227,17 @@ class Resource
     /**
      * @return mixed
      */
-    public function getAlerts()
+    public function getAlert()
     {
-        return $this->alerts;
+        return $this->alert;
     }
 
     /**
-     * @param mixed $alerts
+     * @param mixed $alert
      */
-    public function setAlerts($alerts): void
+    public function setAlerts($alert): void
     {
-        $this->alerts = $alerts;
+        $this->alert = $alert;
     }
 
 }
