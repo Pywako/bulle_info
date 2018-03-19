@@ -12,6 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements AdvancedUserInterface, \Serializable
 {
+    const DEFAULT_ROLE = "ROLE_USER";
     /**
      * @var int
      *
@@ -22,19 +23,10 @@ class User implements AdvancedUserInterface, \Serializable
     private $id;
 
     /**
-     *
-     * @ORM\Column(name="first_name", type="string", length=100)
-     * @Assert\NotBlank(message="Le champs prénom doit être rempli")
+     * @ORM\Column(type="string", length=100)
+     * @Assert\NotBlank(message="le pseudo doit être rempli")
      */
-    private $firstName;
-
-    /**
-     *
-     * @ORM\Column(name="last_name", type="string", length=100)
-     * @Assert\NotBlank(message="Le champs nom doit être rempli")
-     */
-    private $lastName;
-
+    private $username;
     /**
      *
      * @Assert\NotBlank(message="Les champs mot de passe doit être rempli")
@@ -75,7 +67,7 @@ class User implements AdvancedUserInterface, \Serializable
      * @ORM\Column(type="string", nullable=true)
      *
      */
-    private $roles;
+    private $roles = self::DEFAULT_ROLE;
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Subject", mappedBy="users")
@@ -107,41 +99,22 @@ class User implements AdvancedUserInterface, \Serializable
     }
 
     /**
-     *
+     * @return mixed
      */
-    public function getFirstName()
-    {
-        return $this->firstName;
-    }
-
-    /**
-     * @param string $firstName
-     */
-    public function setFirstName(string $firstName): void
-    {
-        $this->firstName = $firstName;
-    }
-
-    /**
-     *
-     */
-    public function getLastName()
-    {
-        return $this->lastName;
-    }
-
-    /**
-     * @param string $lastName
-     */
-    public function setLastName(string $lastName): void
-    {
-        $this->lastName = $lastName;
-    }
-
     public function getUsername()
     {
-        return $this->email;
+        return $this->username;
     }
+
+    /**
+     * @param mixed $username
+     */
+    public function setUsername($username): void
+    {
+        $this->username = $username;
+    }
+
+
 
     /**
      * @return mixed
