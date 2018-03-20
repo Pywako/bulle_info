@@ -35,9 +35,25 @@ class User implements AdvancedUserInterface, \Serializable
     private $plainPassword;
 
     /**
+     * @Assert\NotBlank(groups={"changePassword"})
+     * @Assert\Length(min=8, groups={"changePassword"})
+     * @Assert\NotNull(groups={"changePassword"})
+     */
+    private $oldPassword;
+
+    /**
+     * @Assert\NotBlank(groups={"changePassword"})
+     * @Assert\Length(min=8, groups={"changePassword"} )
+     * @Assert\NotNull(groups={"changePassword"})
+     */
+    private $newPassword;
+
+    /**
      * @var string
      *
      * @ORM\Column(type="string", length=64)
+     * @Assert\NotBlank()
+     * @Assert\Length(min=8, minMessage="mot de passe trop court")
      */
     private $password;
 
@@ -148,6 +164,39 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->plainPassword = $plainPassword;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getOldPassword()
+    {
+        return $this->oldPassword;
+    }
+
+    /**
+     * @param mixed $oldPassword
+     */
+    public function setOldPassword($oldPassword): void
+    {
+        $this->oldPassword = $oldPassword;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getNewPassword()
+    {
+        return $this->newPassword;
+    }
+
+    /**
+     * @param mixed $newPassword
+     */
+    public function setNewPassword($newPassword): void
+    {
+        $this->newPassword = $newPassword;
+    }
+
 
     /**
      *
