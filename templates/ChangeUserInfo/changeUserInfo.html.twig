@@ -14,9 +14,21 @@
 {% endblock %}
 {% block main %}
     {{ form_start(form) }}
-    {{ form_row(form.oldPassword) }}
-    {{ form_row(form.newPassword) }}
-    <button type="submit" class="btn btn-primary">S'inscrire</button>
+
+    <div>
+        <p><b>Email actuel :</b> {{ user_email }}</p>
+        <p>Souhaitez vous le changer?</p>
+    </div>
+        {{ form_errors(form.newEmail) }}
+        {{ form_row(form.newEmail) }}
+
+        {{ form_errors(form.oldPassword) }}
+        {{ form_row(form.oldPassword) }}
+
+        {{ form_errors(form.newPassword) }}
+        {{ form_row(form.newPassword) }}
+
+        <button type="submit" class="btn btn-primary">Mettre à jour</button>
 
     {{ form_end(form) }}
 {% endblock %}

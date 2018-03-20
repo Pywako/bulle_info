@@ -30,21 +30,20 @@ class User implements AdvancedUserInterface, \Serializable
     /**
      *
      * @Assert\NotBlank(message="Les champs mot de passe doit être rempli")
-     * @Assert\Length(max=4096)
+     * @Assert\Length(max=4096, min=8, minMessage="mot de passe trop court")
+     * @Assert\NotBlank()
      */
     private $plainPassword;
 
     /**
      * @Assert\NotBlank(groups={"changePassword"})
      * @Assert\Length(min=8, groups={"changePassword"})
-     * @Assert\NotNull(groups={"changePassword"})
+     * @Assert\NotNull(groups={"changePassword"}, message="Veuillez entrer votre mot de passe")
      */
     private $oldPassword;
 
     /**
-     * @Assert\NotBlank(groups={"changePassword"})
      * @Assert\Length(min=8, groups={"changePassword"} )
-     * @Assert\NotNull(groups={"changePassword"})
      */
     private $newPassword;
 
@@ -52,8 +51,6 @@ class User implements AdvancedUserInterface, \Serializable
      * @var string
      *
      * @ORM\Column(type="string", length=64)
-     * @Assert\NotBlank()
-     * @Assert\Length(min=8, minMessage="mot de passe trop court")
      */
     private $password;
 
@@ -65,6 +62,10 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $email;
 
+    /**
+     * @Assert\Email(message="veuillez entrer un email de type nom@email.com")
+     */
+    private $newEmail;
     /**
      * @var bool
      *
@@ -81,7 +82,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var array
-     * @ORM\Column(type="string")
+     * @ORM\Column(type="json")
      *
      */
     private $roles = [self::DEFAULT_ROLE];
@@ -148,6 +149,23 @@ class User implements AdvancedUserInterface, \Serializable
     {
         $this->email = $email;
     }
+
+    /**
+     * @return mixed
+     */
+    public function getNewEmail()
+    {
+        return $this->newEmail;
+    }
+
+    /**
+     * @param mixed $newEmail
+     */
+    public function setNewEmail($newEmail): void
+    {
+        $this->newEmail = $newEmail;
+    }
+
 
     /**
      *
@@ -228,9 +246,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function getRoles()
     {
         $roles = $this->roles;
-        if(empty($roles)){
-            $roles[] = 'ROLE_USER';
-        }
         return array_unique($roles);
     }
 

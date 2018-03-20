@@ -7,7 +7,7 @@ namespace App\Controller;
 
 use App\Entity\Resource;
 use App\Entity\Subject;
-use App\Form\ResourceType;
+use App\Form\Type\ResourceType;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
