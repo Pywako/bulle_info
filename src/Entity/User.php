@@ -12,7 +12,7 @@ use Symfony\Component\Validator\Constraints as Assert;
  */
 class User implements AdvancedUserInterface, \Serializable
 {
-    const DEFAULT_ROLE = "ROLE_USER";
+    const DEFAULT_ROLE = 'ROLE_USER';
     /**
      * @var int
      *
@@ -64,10 +64,11 @@ class User implements AdvancedUserInterface, \Serializable
     private $subscription_date;
 
     /**
-     * @ORM\Column(type="string", nullable=true)
+     * @var array
+     * @ORM\Column(type="string")
      *
      */
-    private $roles = self::DEFAULT_ROLE;
+    private $roles = [self::DEFAULT_ROLE];
 
     /**
      * @ORM\ManyToMany(targetEntity="App\Entity\Subject", mappedBy="users")
@@ -170,7 +171,7 @@ class User implements AdvancedUserInterface, \Serializable
         return null;
     }
 
-    public function setRoles($roles)
+    public function setRoles(array $roles)
     {
         $this->roles = $roles;
     }
