@@ -73,6 +73,14 @@
                     {% block h1 %}{% endblock %}
                 </h1>
 
+                {% for label, messages in app.flashes %}
+                    {% for message in messages %}
+                        <div class="alert alert-{{ label }}" role="alert">
+                            {{ message }}
+                        </div>
+                    {% endfor %}
+                {% endfor %}
+
                 {% block breadcrumbs %}{% endblock %}
 
                 {% block main %}{% endblock %}
