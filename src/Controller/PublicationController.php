@@ -23,15 +23,14 @@ class PublicationController extends Controller
         $form = $this->createForm(ResourceType::class, $resource);
 
         $form->handleRequest($request);
+
         if($form->isSubmitted() && $form->isValid())
         {
-            $task = $form->getData();
-
             $subject = new Subject();
-            $now =new \dateTime();
+            $now = new \dateTime();
 
             //Subject
-            $formSubjectTitle = $task->getSubject()->getTitle();
+            $formSubjectTitle = $resource->getSubject()->getTitle();
             $subject->setTitle($formSubjectTitle);
 
             if(is_null($subject->getCreationDate()))
@@ -39,20 +38,20 @@ class PublicationController extends Controller
                 $subject->setCreationDate($now);
             }
             $subject->setUpdateDate($now);
-            $task->setSubject($subject);
+            $resource->setSubject($subject);
 
             //resource
-            if(is_null($task->getCreationDate()))
+            if(is_null($resource->getCreationDate()))
             {
-                $task->setCreationDate($now);
+                $resource->setCreationDate($now);
             }
-            $task->setUpdateDate($now);
+            $resource->setUpdateDate($now);
             $user = $this->getUser();
-            $task->setUser($user);
+            $resource->setUser($user);
 
 
             $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($task);
+            $entityManager->persist($resource);
             $entityManager->flush();
 
             return $this->redirectToRoute('homepage');
