@@ -32,12 +32,12 @@ class ChangeUserInfoController extends Controller
             {
                 $userDataManager->setEncodePasswordToUser('newPassword', $user);
                 $userDataManager->toDatabase($user);
-                $this->addFlash('sucess', 'Le mot de passe a bien été changé');
+                $this->addFlash('success', 'Le mot de passe a bien été changé');
 
                 return $this->redirectToRoute('homepage');
             }
             else{
-                $this->addFlash('notice', 'Ancient mot de passe incorrect, veuillez réessayer');
+                $this->addFlash('danger', 'Ancient mot de passe incorrect, veuillez réessayer');
                 return $this->redirectToRoute('user_info');
             }
         }

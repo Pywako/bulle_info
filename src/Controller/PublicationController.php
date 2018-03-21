@@ -30,6 +30,8 @@ class PublicationController extends Controller
         {
             $publicationManager->prepareResourceToPublish($resource);
             $publicationManager->toDatabase($resource);
+            $this->addFlash('success', 'Ressource Publiée !');
+
             return $this->redirectToRoute('homepage');
         }
         return $this->render(
