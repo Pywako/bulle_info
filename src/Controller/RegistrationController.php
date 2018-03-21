@@ -27,6 +27,7 @@ class RegistrationController extends Controller
         {
             $userDataManager->hydrateforRegistration($user);
             $userDataManager->toDatabase($user);
+            $this->addFlash('sucess', 'Enregistrement effectué, vous pouvez maintenant vous connecter');
 
             return $this->redirectToRoute('homepage');
         }
