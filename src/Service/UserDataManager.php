@@ -50,6 +50,24 @@ class UserDataManager
         return $user;
     }
 
+    public function changePassword($user)
+    {
+        if($user->getNewPassword())
+        {
+            $this->setEncodePasswordToUser('newPassword', $user);
+            $this->toDatabase($user);
+        }
+    }
+
+    public function changeEmail($user)
+    {
+        if($user->getNewEmail())
+        {
+            $user->setEmail($user->getNewEmail());
+            $this->toDatabase($user);
+        }
+    }
+
     public function toDatabase($user)
     {
         $this->entityManager->persist($user);

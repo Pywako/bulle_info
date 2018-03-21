@@ -30,10 +30,16 @@ class ChangeUserInfoController extends Controller
         {
             if($passwordEncoder->isPasswordValid($user, $user->getOldPassword()))
             {
-                $userDataManager->setEncodePasswordToUser('newPassword', $user);
-                $userDataManager->toDatabase($user);
-                $this->addFlash('success', 'Le mot de passe a bien été changé');
-
+                if($user->getNewPassword())
+                {
+                    $userDataManager->changePassword($user);
+                    $this->addFlash('success', 'Le mot de passe a bien été changé');
+                }
+                if($user->getNewEmail())
+                {
+                    $userDataManager->changeEmail($user);
+                    $this->addFlash('success', 'L\'email a bien été changé');
+                }
                 return $this->redirectToRoute('homepage');
             }
             else{
