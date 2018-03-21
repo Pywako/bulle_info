@@ -6,8 +6,9 @@ namespace App\Controller;
 
 
 use App\Entity\Resource;
-use App\Entity\Subject;
 use App\Form\Type\ResourceType;
+use App\Service\PublicationManager;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
@@ -16,8 +17,9 @@ class PublicationController extends Controller
 {
     /**
      * @Route("/publier", name="publier")
+     * @Security("has_role('ROLE_USER')")
      */
-    public function publishAction(Request $request)
+    public function publishAction(Request $request, PublicationManager $publicationManager)
     {
         $resource = new Resource();
         $form = $this->createForm(ResourceType::class, $resource);
@@ -26,34 +28,8 @@ class PublicationController extends Controller
 
         if($form->isSubmitted() && $form->isValid())
         {
-            $subject = new Subject();
-            $now = new \dateTime();
-
-            //Subject
-            $formSubjectTitle = $resource->getSubject()->getTitle();
-            $subject->setTitle($formSubjectTitle);
-
-            if(is_null($subject->getCreationDate()))
-            {
-                $subject->setCreationDate($now);
-            }
-            $subject->setUpdateDate($now);
-            $resource->setSubject($subject);
-
-            //resource
-            if(is_null($resource->getCreationDate()))
-            {
-                $resource->setCreationDate($now);
-            }
-            $resource->setUpdateDate($now);
-            $user = $this->getUser();
-            $resource->setUser($user);
-
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($resource);
-            $entityManager->flush();
-
+            $publicationManager->prepareResourceToPublish($resource);
+            $publicationManager->toDatabase($resource);
             return $this->redirectToRoute('homepage');
         }
         return $this->render(
