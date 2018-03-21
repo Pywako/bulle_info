@@ -6,37 +6,27 @@ namespace App\Controller;
 
 
 
-use App\Entity\User;
 use App\Form\Type\UserType;
+use App\Service\UserDataManager;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\Routing\Annotation\Route;
-use Symfony\Component\Security\Core\Encoder\UserPasswordEncoderInterface;
 
 class RegistrationController extends Controller
 {
     /**
      * @Route("/inscription", name="user_registration")
      */
-    public function registerAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function registerAction(Request $request, UserDataManager $userDataManager)
     {
-        $user = new User();
+        $user = $userDataManager->createUser();
         $form = $this->createForm(UserType::class, $user);
 
         $form->handleRequest($request);
         if($form->isSubmitted() && $form->isValid())
         {
-
-            $password = $passwordEncoder->encodePassword($user, $user->getPlainPassword());
-            $user->setPassword($password);
-
-            $now =new \DateTime();
-            $user->setSubscriptionDate($now);
-            $user->setIsActive(true);
-
-            $entityManager = $this->getDoctrine()->getManager();
-            $entityManager->persist($user);
-            $entityManager->flush();
+            $userDataManager->hydrateforRegistration($user);
+            $userDataManager->toDatabase($user);
 
             return $this->redirectToRoute('homepage');
         }
