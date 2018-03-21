@@ -5,6 +5,7 @@
 namespace App\Controller;
 
 use App\Form\Type\ChangeUserInfoType;
+use App\Service\UserDataManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Request;
@@ -17,23 +18,20 @@ class ChangeUserInfoController extends Controller
      * @Route("/mon_compte", name="user_info")
      * @Security("has_role('ROLE_USER')")
      */
-    public function changeUserInfoAction(Request $request, UserPasswordEncoderInterface $passwordEncoder)
+    public function changeUserInfoAction(Request $request, UserDataManager $userDataManager, UserPasswordEncoderInterface $passwordEncoder)
     {
         $user = $this->getUser();
         $userEmail = $user->getEmail();
+
         $form = $this->createForm(ChangeUserInfoType::class, $user);
         $form->handleRequest($request);
 
         if($form->isSubmitted() && $form->isValid() )
         {
-            $oldPassword = $user->getOldPassword();
-            if($passwordEncoder->isPasswordValid($user, $oldPassword))
+            if($passwordEncoder->isPasswordValid($user, $user->getOldPassword()))
             {
-                $newPassword = $passwordEncoder->encodePassword($user, $user->getNewPassword());
-                $user->setPassword($newPassword);
-                $entityManager = $this->getDoctrine()->getManager();
-                $entityManager->persist($user);
-                $entityManager->flush();
+                $userDataManager->setEncodePasswordToUser('newPassword', $user);
+                $userDataManager->toDatabase($user);
                 $this->addFlash('sucess', 'Le mot de passe a bien été changé');
 
                 return $this->redirectToRoute('homepage');
@@ -48,5 +46,4 @@ class ChangeUserInfoController extends Controller
             'user_email' => $userEmail
         ]);
     }
-
 }
