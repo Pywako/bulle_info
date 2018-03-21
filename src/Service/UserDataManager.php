@@ -32,7 +32,7 @@ class UserDataManager
         return $user = new User();
     }
 
-    public function encodePassword($passwordName, User $user)
+    public function setEncodePasswordToUser($passwordName, User $user)
     {
         $passwordGetter = 'get' . ucfirst($passwordName);
         $passwordToSet = $user->$passwordGetter();
@@ -43,7 +43,7 @@ class UserDataManager
 
     public function hydrateforRegistration(User $user)
     {
-        $this->encodePassword("plainPassword", $user);
+        $this->setEncodePasswordToUser("plainPassword", $user);
         $this->dateManager->setDateToNow('subscription', $user);
         $user->setIsActive(true);
 
