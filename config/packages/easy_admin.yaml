@@ -1,6 +1,22 @@
-#easy_admin:
-#    entities:
-#        # List the entity class name you want to manage
-#        - App\Entity\Product
-#        - App\Entity\Category
-#        - App\Entity\User
+easy_admin:
+    design:
+            menu: ['Resource', 'Subject', 'Category', 'Alert', 'User']
+            brand_color: '#083850'
+
+    entities:
+        # List the entity class name you want to manage
+        Category:
+            class: App\Entity\Category
+        Subject:
+            class: App\Entity\Subject
+        Resource:
+            class: App\Entity\Resource
+        Alert:
+            class: App\Entity\Alert
+        User:
+            class: App\Entity\User
+    #Admin pannel name
+    site_name: Administration Bulle d'info
+
+
+
