@@ -21,7 +21,7 @@ class UserFixtures extends Fixture
 
     public function load(ObjectManager $manager)
     {
-        foreach ($this->getUserData() as [$username, $password, $email, $isActive, $subscriptionDate])
+        foreach ($this->getUserData() as [$username, $password, $email, $isActive, $subscriptionDate, $roles])
         {
             $user = new User();
             $user->setUsername($username);
@@ -29,6 +29,7 @@ class UserFixtures extends Fixture
             $user->setEmail($email);
             $user->setIsActive($isActive);
             $user->setSubscriptionDate($subscriptionDate);
+            $user->setRoles($roles);
 
             $manager->persist($user);
             $this->addReference($username, $user);
@@ -41,8 +42,8 @@ class UserFixtures extends Fixture
         $now = new \dateTime();
         return [
             ['tim', 'kitty5!','tomy@gmail.com',true, $now, ['ROLE_USER']],
-            ['lena', 'Strangekitten','tomy@gmail.com',true, $now, ['ROLE_USER']],
-            ['boardUser', 'Weirdkitten','tomy@gmail.com',true, $now, ['ROLE_ADMIN']],
+            ['lena', 'Strangekitten','len@gmail.com',true, $now, ['ROLE_USER']],
+            ['boardUser', 'Weirdkitten','userAdmin@gmail.com',true, $now, ['ROLE_ADMIN']],
         ];
     }
 

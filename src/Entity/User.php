@@ -82,7 +82,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @var array
-     * @ORM\Column(type="json")
+     * @ORM\Column(type="array")
      *
      */
     private $roles = [self::DEFAULT_ROLE];
