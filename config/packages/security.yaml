@@ -5,7 +5,6 @@ security:
 
     # https://symfony.com/doc/current/security.html#where-do-users-come-from-user-providers
     providers:
-        in_memory: { memory: ~ }
         our_db_provider:
             entity:
                 class: App\Entity\User
@@ -27,16 +26,13 @@ security:
             form_login:
                 login_path: connexion
                 check_path: connexion
-                csrf_token_generator: security.csrf.token_manager
+                default_target_path: homepage
+                username_parameter: login_form[_username]
+                password_parameter: login_form[_password]
 
             logout:
                 path: deconnexion
                 target: homepage
-
-            remember_me:
-                secret:   '%kernel.secret%'
-                lifetime: 604800 # 1 week in seconds
-                path:     /
 
             # form_login: true
             # https://symfony.com/doc/current/security/form_login_setup.html

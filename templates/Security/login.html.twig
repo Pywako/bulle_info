@@ -15,25 +15,15 @@
 {% block main %}
     <div>
         {% if error %}
-            <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            <div class="alert alert-danger">
+                <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>
+            </div>
         {% endif %}
+        {{ form_start(form) }}
+            {{ form_row(form._username) }}
+            {{ form_row(form._password) }}
 
-        <form action="{{ path('connexion') }}" method="post">
-            <div class="form-group">
-                <label for="username">login</label>
-                <input type="text" class="form-control required" id="username" name="_username" value="{{ last_login }}">
-            </div>
-            <div class="form-group">
-                <label for="password">Mot de passe</label>
-                <input type="password" class="form-control required" id="password" name="_password" >
-            </div>
-            <div class="form-group">
-                <input type="checkbox" id="remember_me" name="_remember_me" checked />
-                <label for="remember_me">rester connecté</label>
-            </div>
-            <input type="hidden" name="_csrf_token" value="{{ csrf_token('authenticate') }}" >
-
-            <button type="submit" name="login" class="btn btn-primary">Connexion</button>
-        </form>
+            <button type="submit" class="btn btn-success">Se connecter <span class="fa fa-lock"></span></button>
+        {{ form_end(form) }}
     </div>
 {% endblock %}
