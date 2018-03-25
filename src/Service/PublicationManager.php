@@ -4,8 +4,8 @@
 
 namespace App\Service;
 
-use App\Entity\Subject;
 use Doctrine\ORM\EntityManagerInterface;
+use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
 
 class PublicationManager
@@ -13,20 +13,32 @@ class PublicationManager
     private $dateManager;
     private $entityManager;
     private $user;
+    private $session;
 
     public function __construct(DateManager $dateManager, EntityManagerInterface $entityManager,
-                                TokenStorageInterface $tokenStorage)
+                                TokenStorageInterface $tokenStorage, SessionInterface $session)
     {
         $this->dateManager = $dateManager;
         $this->entityManager = $entityManager;
         $this->user = $tokenStorage->getToken()->getUser();
+        $this->session = $session;
 
+    }
+
+    public function getDataInSession($data)
+    {
+        $publication = $this->session->get('' . $data . '');
+        return $publication;
+    }
+
+    public function setInSession($parameter, $data)
+    {
+        $this->session->set(''. $parameter .'', $data);
     }
 
     public function setCreationAndUpdateDateToNow($entity)
     {
-        if(is_null($entity->getCreationDate()))
-        {
+        if (is_null($entity->getCreationDate())) {
             $this->dateManager->setDateToNow('creation', $entity);
         }
         $this->dateManager->setDateToNow('update', $entity);
