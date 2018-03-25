@@ -3,14 +3,14 @@
 namespace App\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-use Symfony\Component\Security\Core\User\AdvancedUserInterface;
+use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
 
 /**
  * @ORM\Entity(repositoryClass="App\Repository\UserRepository")
  * @ORM\Table(name="user")
  */
-class User implements AdvancedUserInterface, \Serializable
+class User implements UserInterface
 {
     const DEFAULT_ROLE = 'ROLE_USER';
     /**
@@ -24,7 +24,7 @@ class User implements AdvancedUserInterface, \Serializable
 
     /**
      * @ORM\Column(type="string", length=100, unique=true)
-     * @Assert\NotBlank(message="le pseudo doit être rempli")
+     * @Assert\NotBlank(message="veuillez entrer votre nom")
      */
     private $username;
     /**
@@ -35,12 +35,6 @@ class User implements AdvancedUserInterface, \Serializable
      */
     private $plainPassword;
 
-    /**
-     * @Assert\NotBlank(groups={"changePassword"})
-     * @Assert\Length(min=8, groups={"changePassword"})
-     * @Assert\NotNull(groups={"changePassword"}, message="Veuillez entrer votre mot de passe")
-     */
-    private $oldPassword;
 
     /**
      * @Assert\Length(min=8, groups={"changePassword"} )
@@ -181,22 +175,6 @@ class User implements AdvancedUserInterface, \Serializable
     public function setPlainPassword(string $plainPassword): void
     {
         $this->plainPassword = $plainPassword;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getOldPassword()
-    {
-        return $this->oldPassword;
-    }
-
-    /**
-     * @param mixed $oldPassword
-     */
-    public function setOldPassword($oldPassword): void
-    {
-        $this->oldPassword = $oldPassword;
     }
 
     /**
