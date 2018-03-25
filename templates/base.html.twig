@@ -17,17 +17,6 @@
             <nav class="navbar navbar-expand-lg navbar-light bg-light">
                 <a class="navbar-brand" href="{{ path('homepage') }}">Bulle Info</a>
                 <ul class="navbar-nav mr-auto">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                            Catégories
-                        </a>
-                        <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                            <!-- Récupération des catégories depuis la bdd-->
-                            <a class="dropdown-item" href="#">Projet</a>
-                            <a class="dropdown-item" href="#">Outils</a>
-                            <a class="dropdown-item" href="#">Méthode</a>
-                        </div>
-                    </li>
                 </ul>
                 <div class="row text-right">
                     <form class="form-inline my-2 my-lg-0">
@@ -44,7 +33,7 @@
                             </li>
                             {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('publier') }}">Publier</a>
+                                    <a class="nav-link" href="{{ path('publication_step1') }}">Publier</a>
                                 </li>
                                 {% if is_granted('ROLE_USER') %}
                                     <li class="nav-item">
