@@ -26,29 +26,24 @@ class ChangeUserInfoController extends Controller
         $form = $this->createForm(ChangeUserInfoType::class, $user);
         $form->handleRequest($request);
 
-        if($form->isSubmitted() && $form->isValid() )
-        {
-            if($passwordEncoder->isPasswordValid($user, $user->getOldPassword()))
-            {
-                if($user->getNewPassword())
-                {
-                    $userDataManager->changePassword($user);
-                    $this->addFlash('success', 'Le mot de passe a bien été changé');
-                }
-                if($user->getNewEmail())
-                {
-                    $userDataManager->changeEmail($user);
-                    $this->addFlash('success', 'L\'email a bien été changé');
-                }
+        if ($form->isSubmitted() && $form->isValid()) {
+
+            if ($user->getNewPassword()) {
+                $userDataManager->changePassword($user);
+                $this->addFlash('success', 'Le mot de passe a bien été changé');
                 return $this->redirectToRoute('homepage');
             }
-            else{
+            if ($user->getNewEmail()) {
+                $userDataManager->changeEmail($user);
+                $this->addFlash('success', 'L\'email a bien été changé');
+                return $this->redirectToRoute('homepage');
+            } else {
                 $this->addFlash('danger', 'Ancient mot de passe incorrect, veuillez réessayer');
                 return $this->redirectToRoute('user_info');
             }
         }
         return $this->render('ChangeUserInfo/changeUserInfo.html.twig', [
-            'form' =>$form->createView(),
+            'form'       => $form->createView(),
             'user_email' => $userEmail
         ]);
     }
