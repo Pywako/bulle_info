@@ -1,26 +1,38 @@
 {% extends 'base.html.twig' %}
 {% block title %} Publier une ressource{% endblock %}
 
-{% block h1 %}Publier une ressource{% endblock %}
+{% block h1 %}Publication{% endblock %}
 
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
             <li class="breadcrumb-item"><a href="{{ path('homepage') }}">Accueil</a></li>
-            <li class="breadcrumb-item active" aria-current="page">Publier</li>
+            <li class="breadcrumb-item"><a href="{{ path('publication_step1') }}">Etape 1</a></li>
+            <li class="breadcrumb-item"><a href="{{ path('publication_step2') }}">Etape 2</a></li>
+            <li class="breadcrumb-item active" aria-current="page">Etape 3 : Récapitulatif</li>
         </ol>
     </nav>
 {% endblock %}
 {% block main %}
-    {{ form_start(form) }}
+    <h2>Récapitulatif</h2>
+    <h4>Catégorie</h4>
+    <p>
+        {{ category.title }}
+    </p>
 
-        {{ form_row(form.subject) }}
-        {{ form_row(form.title) }}
-        {{ form_row(form.summary) }}
-        {{ form_row(form.link) }}
-        {{ form_row(form.tag) }}
+    <h4>Sujet</h4>
+    <p>
+        {{ subject.title }}
+    </p>
 
-        <button type="submit" class="btn btn-primary">Publier</button>
+    <h4>Resource</h4>
+    <p>
+        {{ resource.title }} <br>
+        {{ resource.summary }} <br>
+        {{ resource.link }} <br>
+        {{ resource.tag }} <br>
+    </p>
 
-    {{ form_end(form) }}
+
+    <button type="submit" class="btn btn-success">Publier</button>
 {% endblock %}
