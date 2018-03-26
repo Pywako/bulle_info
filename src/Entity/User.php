@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -82,10 +83,22 @@ class User implements UserInterface
      */
     private $roles = [self::DEFAULT_ROLE];
 
-    public function construct()
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Subject", mappedBy="user", cascade={"persist"})
+     */
+    private $subjects;
+
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="user", cascade={"persist"})
+     */
+    private $resources;
+
+    public function __construct()
     {
         $this->isActive = true;
         $this->roles = [];
+        $this->subjects = new ArrayCollection();
+        $this->resources = new ArrayCollection();
     }
 
     /**
@@ -210,6 +223,22 @@ class User implements UserInterface
     {
         $roles = $this->roles;
         return array_unique($roles);
+    }
+
+    /**
+     * @return Collection|Subject[]
+     */
+    public function getSubjects()
+    {
+        return $this->subjects;
+    }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources()
+    {
+        return $this->resources;
     }
 
     public function eraseCredentials()

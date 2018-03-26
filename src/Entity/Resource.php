@@ -54,12 +54,12 @@ class Resource
     private $tag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Subject")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject",inversedBy="resources")
      */
     private $subject;
 

@@ -33,8 +33,7 @@ class Category
     private $update_date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="categorys")
-     * @ORM\JoinColumn(name="subjects_id", referencedColumnName="id")
+     * @ORM\ManyToMany(targetEntity="App\Entity\Subject", inversedBy="categorys", cascade={"persist"})
      */
     private $subjects;
 
@@ -104,13 +103,7 @@ class Category
      */
     public function getSubjects()
     {
-        if(empty($this->subjects == null))
-        {
-            return null;
-        }
-        else{
-            return $this->subjects;
-        }
+        return $this->subjects;
     }
 
     /**

@@ -3,6 +3,7 @@
 namespace App\Entity;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -33,10 +34,25 @@ class Subject
     private $update_date;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="subjects")
      */
     private $user;
 
+    /**
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="subject")
+     */
+    private $resources;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="subjects", cascade={"persist"})
+     */
+    private $categorys;
+
+    public function __construct()
+    {
+        $this->resources = new ArrayCollection();
+        $this->categorys = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -109,5 +125,31 @@ class Subject
     {
         $this->user = $user;
     }
+
+    /**
+     * @return Collection|Resource[]
+     */
+    public function getResources()
+    {
+        return $this->resources;
+    }
+
+    /**
+     * @return Collection|Category[]
+     */
+    public function getCategorys()
+    {
+        return $this->categorys;
+    }
+
+    /**
+     *
+     */
+    public function addCategory($category): void
+    {
+        $this->categorys[] = $category;
+    }
+
+
 
 }
