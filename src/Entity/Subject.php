@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -32,20 +33,10 @@ class Subject
     private $update_date;
 
     /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\User", inversedBy="subjects")
-     * @ORM\JoinColumn(name="users_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
-    private $users;
+    private $user;
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Category", mappedBy="subjects")
-     */
-    private $categorys;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="subject", cascade="persist")
-     */
-    private $resources;
 
     /**
      * @return mixed
@@ -106,48 +97,17 @@ class Subject
     /**
      * @return mixed
      */
-    public function getUsers()
+    public function getUser()
     {
-        return $this->users;
+        return $this->user;
     }
 
     /**
-     * @param mixed $users
+     * @param mixed $user
      */
-    public function setUsers($users): void
+    public function setUser($user): void
     {
-        $this->users = $users;
+        $this->user = $user;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getCategorys()
-    {
-        return $this->categorys;
-    }
-
-    /**
-     * @param mixed $categorys
-     */
-    public function setCategorys($categorys): void
-    {
-        $this->categorys = $categorys;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResources()
-    {
-        return $this->resources;
-    }
-
-    /**
-     * @param mixed $resources
-     */
-    public function setResources($resources): void
-    {
-        $this->resources = $resources;
-    }
 }

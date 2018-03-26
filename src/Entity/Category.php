@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -36,6 +37,11 @@ class Category
      * @ORM\JoinColumn(name="subjects_id", referencedColumnName="id")
      */
     private $subjects;
+
+    public function __construct()
+    {
+        $this->subjects = new ArrayCollection();
+    }
 
     /**
      * @return mixed
@@ -98,15 +104,29 @@ class Category
      */
     public function getSubjects()
     {
-        return $this->subjects;
+        if(empty($this->subjects == null))
+        {
+            return null;
+        }
+        else{
+            return $this->subjects;
+        }
     }
 
     /**
-     * @param mixed $subjects
+     * @param $subject
      */
-    public function setSubjects($subjects): void
+    public function addSubject($subject)
     {
-        $this->subjects = $subjects;
+        $this->subjects[] = $subject;
+    }
+
+    /**
+     * @param $subject
+     */
+    public function removeSubject($subject)
+    {
+        $this->subjects->removeElement($subject);
     }
 
 }

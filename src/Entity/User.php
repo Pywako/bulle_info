@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 use Symfony\Component\Security\Core\User\UserInterface;
 use Symfony\Component\Validator\Constraints as Assert;
@@ -81,21 +82,6 @@ class User implements UserInterface
      */
     private $roles = [self::DEFAULT_ROLE];
 
-    /**
-     * @ORM\ManyToMany(targetEntity="App\Entity\Subject", mappedBy="users")
-     */
-    private $subjects;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="user")
-     */
-    private $resources;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="user")
-     */
-    private $alert;
-
     public function construct()
     {
         $this->isActive = true;
@@ -125,7 +111,6 @@ class User implements UserInterface
     {
         $this->username = $username;
     }
-
 
 
     /**
@@ -284,66 +269,21 @@ class User implements UserInterface
         $this->subscription_date = $subscription_date;
     }
 
-    /**
-     * @return mixed
-     */
-    public function getSubjects()
-    {
-        return $this->subjects;
-    }
-
-    /**
-     * @param mixed $subjects
-     */
-    public function setSubjects($subjects): void
-    {
-        $this->subjects = $subjects;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getResources()
-    {
-        return $this->resources;
-    }
-
-    /**
-     * @param mixed $resources
-     */
-    public function setResources($resources): void
-    {
-        $this->resources = $resources;
-    }
-
-    /**
-     * @return mixed
-     */
-    public function getAlert()
-    {
-        return $this->alert;
-    }
-
-    /**
-     * @param mixed $alert
-     */
-    public function setAlert($alert): void
-    {
-        $this->alert = $alert;
-    }
-
     public function isAccountNonExpired()
     {
         return true;
     }
+
     public function isAccountNonLocked()
     {
         return true;
     }
+
     public function isCredentialsNonExpired()
     {
         return true;
     }
+
     public function isEnabled()
     {
         return $this->isActive;

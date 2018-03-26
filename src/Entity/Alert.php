@@ -27,14 +27,14 @@ class Alert
     private $comment;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="alert")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Resource", inversedBy="alert")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Resource")
      */
-    private $resources;
+    private $resource;
 
     /**
      * @return mixed
@@ -95,17 +95,17 @@ class Alert
     /**
      * @return mixed
      */
-    public function getResources()
+    public function getResource()
     {
-        return $this->resources;
+        return $this->resource;
     }
 
     /**
-     * @param mixed $resources
+     * @param mixed $resource
      */
-    public function setResources($resources): void
+    public function setResource($resource): void
     {
-        $this->resources = $resources;
+        $this->resource = $resource;
     }
 
 }

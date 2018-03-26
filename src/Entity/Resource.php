@@ -2,6 +2,7 @@
 
 namespace App\Entity;
 
+use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping as ORM;
 
 /**
@@ -53,22 +54,14 @@ class Resource
     private $tag;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="resources", cascade={"persist"})
-     * @ORM\JoinColumn(name="user_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\User")
      */
     private $user;
 
     /**
-     * @ORM\ManyToOne(targetEntity="App\Entity\Subject", inversedBy="resources", cascade={"persist"})
-     * @ORM\JoinColumn(name="subject_id", referencedColumnName="id")
+     * @ORM\ManyToOne(targetEntity="App\Entity\Subject")
      */
     private $subject;
-
-    /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Alert", mappedBy="resources", cascade={"persist"})
-     * @ORM\JoinColumn(name="alerts_id", referencedColumnName="id")
-     */
-    private $alert;
 
 
     /**
@@ -222,23 +215,6 @@ class Resource
     public function setSubject($subject): void
     {
         $this->subject = $subject;
-    }
-
-
-    /**
-     * @return mixed
-     */
-    public function getAlert()
-    {
-        return $this->alert;
-    }
-
-    /**
-     * @param mixed $alert
-     */
-    public function setAlerts($alert): void
-    {
-        $this->alert = $alert;
     }
 
 }
