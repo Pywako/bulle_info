@@ -4,6 +4,8 @@
 
 namespace App\Service;
 
+use App\Entity\Resource;
+use App\Entity\Subject;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Security\Core\Authentication\Token\Storage\TokenStorageInterface;
@@ -22,7 +24,6 @@ class PublicationManager
         $this->entityManager = $entityManager;
         $this->user = $tokenStorage->getToken()->getUser();
         $this->session = $session;
-
     }
 
     public function getDataInSession($data)
@@ -44,16 +45,25 @@ class PublicationManager
         $this->dateManager->setDateToNow('update', $entity);
     }
 
-    public function prepareResourceToPublish($resource)
+    public function hydrateSubject(Subject $subject, $title)
     {
-        $subject = $resource->getSubject();
-
+        $subject->setTitle($title);
         $this->setCreationAndUpdateDateToNow($subject);
         $subject->setUser($this->user);
-        //TODO Add category to subject
+    }
 
+    public function hydrateResource(Resource $resource)
+    {
         $this->setCreationAndUpdateDateToNow($resource);
         $resource->setUser($this->user);
+    }
+
+    public function prepareToPublish(Resource $resource, Subject $subject, $categorys)
+    {
+        foreach ($categorys as $category ){
+            $category->addSubject($subject);
+        }
+        $resource->setSubject($subject);
     }
 
     public function toDatabase($entity)
