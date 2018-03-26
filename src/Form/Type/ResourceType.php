@@ -7,6 +7,7 @@ namespace App\Form\Type;
 
 use App\Entity\Resource;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextareaType;
 use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 use Symfony\Component\OptionsResolver\OptionsResolver;
@@ -16,28 +17,24 @@ class ResourceType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject', SubjectType::class)
             ->add('title', TextType::class, array(
                 'label' => 'Titre de la ressource'
             ))
-            ->add('summary', TextType::class ,array(
-                'label' => 'La ressource en quelques mots'
+            ->add('summary', TextareaType::class, array(
+                'label' => 'Description : la ressource en quelques mots'
             ))
-            ->add('link', TextType::class ,array(
-                'label' => 'lien de la ressource'
+            ->add('link', TextType::class, array(
+                'label' => 'Lien'
             ))
             ->add('tag', TextType::class, array(
-                'label' => 'tags, permettra de retrouver la ressource par la recherche de mots clés'
-            ))
-
-        ;
+                'label' => 'Etiquettes'
+            ));
     }
 
     public function configureOptions(OptionsResolver $resolver)
     {
         $resolver->setDefaults(array(
             'data_class' => Resource::class,
-
         ));
     }
 
