@@ -34,7 +34,6 @@ class PublicationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $publicationManager->hydrateResource($resource);
             $publicationManager->setInSession('resource', $resource);
             return $this->redirectToRoute('publication_step2');
         }
@@ -47,35 +46,39 @@ class PublicationController extends Controller
      * @Route("/publication/2", name="publication_step2")
      * @Security("has_role('ROLE_USER')")
      */
-    public function CategoryChoiceAction(Request $request, PublicationManager $publicationManager)
+    public function CategoryChoiceAction(Request $request, SessionInterface $session, PublicationManager $publicationManager)
     {
-        $form = $this->createForm(CategorySubjectType::class);
-        $form->handleRequest($request);
+        if (!empty($session->get('resource'))) {
+            $form = $this->createForm(CategorySubjectType::class);
+            $form->handleRequest($request);
 
-        if ($form->isSubmitted() && $form->isValid()) {
-            $category_subject_data = $form->getData();
+            if ($form->isSubmitted() && $form->isValid()) {
+                $formData = $form->getData();
 
-            $categorys = $category_subject_data['title_category'];
+                $categorys = $formData['title_category'];
+                if (!empty($formData['title_subject_text'])) {
+                    $subject = new Subject();
+                    $publicationManager->hydrateSubject($subject, $formData['title_subject_text']);
+                } elseif (!empty($formData['title_subject'])) {
+                    $subject = $formData['title_subject'];
+                    $publicationManager->hydrateSubject($subject, $formData['title_subject']->getTitle());
+                } else {
+                    $this->addFlash('warning', 'Veuillez choisir ou entrer un sujet');
+                    return $this->redirectToRoute('publication_step2');
+                }
+                $resource = $publicationManager->getDataInSession('resource');
 
-            if (!empty($category_subject_data['title_subject_text'])) {
-                $subject = new Subject();
-                $publicationManager->hydrateSubject($subject, $category_subject_data['title_subject_text']);
-            } elseif (!empty($category_subject_data['title_subject'])) {
-                $publicationManager->hydrateSubject($category_subject_data['title_subject_text'],
-                    $category_subject_data['title_subject']->getTitle());
+                $publicationManager->prepareEntitiesToPublish($resource, $subject, $categorys);
+                $publicationManager->pushEntitiesToDatabase($resource, $subject, $categorys);
+
+                $session->remove('resource');
+
+                $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
+                return $this->redirectToRoute('homepage');
             }
-            $resource = $publicationManager->getDataInSession('resource');
-            $resource->setSubject($subject);
-
-            $publicationManager->prepareToPublish($resource, $subject, $categorys );
-            $publicationManager->toDatabase($resource);
-            $publicationManager->toDatabase($subject);
-            foreach ($categorys as $category)
-            {
-                $publicationManager->toDatabase($category);
-            }
-
-            return $this->redirectToRoute('publication_step3');
+        } else {
+            $this->addFlash('danger', 'Veuillez entrer votre ressource en premier ;) ');
+            return $this->redirectToRoute('publication_step1');
         }
         return $this->render(
             'Publication/categoryChoice.html.twig', array(
@@ -88,7 +91,8 @@ class PublicationController extends Controller
      * @Route("/publication/3", name="publication_step3")
      * @Security("has_role('ROLE_USER')")
      */
-    Public function PublishAction(Request $request, SessionInterface $session, PublicationManager $publicationManager)
+    Public
+    function PublishAction(Request $request, SessionInterface $session, PublicationManager $publicationManager)
     {
         $category = $publicationManager->getDataInSession('category');
         $subject = $publicationManager->getDataInSession('subject');

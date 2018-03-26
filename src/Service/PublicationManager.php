@@ -34,7 +34,7 @@ class PublicationManager
 
     public function setInSession($parameter, $data)
     {
-        $this->session->set(''. $parameter .'', $data);
+        $this->session->set('' . $parameter . '', $data);
     }
 
     public function setCreationAndUpdateDateToNow($entity)
@@ -52,18 +52,32 @@ class PublicationManager
         $subject->setUser($this->user);
     }
 
-    public function hydrateResource(Resource $resource)
+    public function hydrateResource(Resource $resource, $subject = null)
     {
+        if ($subject) {
+            $resource->setSubject($subject);
+        }
         $this->setCreationAndUpdateDateToNow($resource);
         $resource->setUser($this->user);
+
     }
 
-    public function prepareToPublish(Resource $resource, Subject $subject, $categorys)
+    public function prepareEntitiesToPublish(Resource $resource, Subject $subject, $categorys)
     {
-        foreach ($categorys as $category ){
+        $this->hydrateResource($resource, $subject);
+        foreach ($categorys as $category) {
             $category->addSubject($subject);
         }
         $resource->setSubject($subject);
+    }
+
+    public function pushEntitiesToDatabase($resource, $subject, $categorys)
+    {
+        $this->toDatabase($resource);
+        $this->toDatabase($subject);
+        foreach ($categorys as $category) {
+            $this->toDatabase($category);
+        }
     }
 
     public function toDatabase($entity)
