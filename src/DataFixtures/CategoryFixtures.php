@@ -28,9 +28,24 @@ class CategoryFixtures extends Fixture
     private function getCategoryData()
     {
         return [
-            ['Conseils parcours OC'], ['Outils'],['Pour s\'entraîner'], ['Php'], ['Javascript'],
-            ['Python'], ['Java'], ['Swift'], ['Go'], ['Autres languages'], ['Docker'], ['Electronique'],
-            ['Méthhode de travail'], ['Livres, ebook'], ['Suggestions'],
+            ['Conseils parcours OC'],
+            ['Outils'],
+            ['Pour s\'entraîner'],
+            ['Design'],
+            ['Marketing'],
+            ['Php'],
+            ['Javascript'],
+            ['Python'],
+            ['Java'],
+            ['Swift'],
+            ['Go'],
+            ['Autres languages'],
+            ['Gestion de projet'],
+            ['Hébergement'],
+            ['Electronique'],
+            ['Méthode de travail'],
+            ['Livres, ebook'],
+            ['Suggestions'],
         ];
     }
 }
