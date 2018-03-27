@@ -15,8 +15,17 @@
         {% if subjects is defined %}
             {% if subjects is not null %}
                 {% for subject in subjects %}
-                    <p>{{ subject }}</p>
+                    <p>{{ subject.title }}</p>
+                    <p>{{ subject.updateDate|date("d/m/Y") }}</p>
+                    <p>{{ subject.user.username }}</p>
+
+                    {% for resource in subject.resources %}
+                        {{ resource.title }}
+                    {% endfor %}
+
                 {% endfor %}
+            {% else %}
+                <p>Aucun sujet sélectionnés</p>
             {% endif %}
         {% else %}
             <p>Aucun sujet sélectionnés</p>

@@ -11,7 +11,7 @@
 {% endblock %}
 
 {% block main %}
-<div class="container">
+<div class="container-fluid">
     <div class="row">
         <div class="col-3">
             <h4>Catégories</h4>
@@ -19,7 +19,7 @@
                 {% if categorys is defined %}
                     {% if categorys is not null %}
                         {% for category in categorys %}
-                            <p>{{ category.title }}</p>
+                            <p><a href="{{ path('show_subject', {'title': category.title }) }}">{{ category.title }}</a></p>
                         {% endfor %}
                     {% endif %}
                 {% else %}
