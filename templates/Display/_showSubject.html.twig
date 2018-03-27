@@ -15,14 +15,39 @@
         {% if subjects is defined %}
             {% if subjects is not null %}
                 {% for subject in subjects %}
-                    <p>{{ subject.title }}</p>
-                    <p>{{ subject.updateDate|date("d/m/Y") }}</p>
-                    <p>{{ subject.user.username }}</p>
+                    <div class="card">
+                        <div class="card-body">
+                            <h5 class="card-title">{{ subject.title }}</h5>
 
-                    {% for resource in subject.resources %}
-                        {{ resource.title }}
-                    {% endfor %}
+                            <div id="carousel-{{ subject.id }}" class="carousel slide" data-ride="carousel">
+                                <div class="carousel-inner">
+                                    {% for resource in subject.resources %}
+                                        <div class="carousel-item active">
+                                            <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title }}</a></h6>
+                                            {% if resource.summary is defined %}
+                                                {% if resource.summary is not null %}
+                                                    <p class="text-center">{{ resource.summary }}</p>
+                                                {% endif %}
+                                            {% endif %}
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                                <a class="carousel-control-prev" href="#carousel-{{ subject.id }}" role="button"
+                                   data-slide="prev">
+                                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Précédent</span>
+                                </a>
+                                <a class="carousel-control-next" href="#carousel-{{ subject.id }}" role="button"
+                                   data-slide="next">
+                                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                    <span class="sr-only">Suivant</span>
+                                </a>
+                            </div>
 
+                            <p class="card-text">Sujet ajouté par : {{ subject.user.username }} | Dernière mise à
+                                jour {{ subject.updateDate|date("d/m/Y") }}</p>
+                        </div>
+                    </div>
                 {% endfor %}
             {% else %}
                 <p>Aucun sujet sélectionnés</p>
