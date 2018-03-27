@@ -11,16 +11,20 @@
 {% endblock %}
 
 {% block main %}
-<div class="container-fluid">
+<div>
     <div class="row">
         <div class="col-3">
             <h4>Catégories</h4>
             <div>
                 {% if categorys is defined %}
                     {% if categorys is not null %}
-                        {% for category in categorys %}
-                            <p><a href="{{ path('show_subject', {'title': category.title }) }}">{{ category.title }}</a></p>
-                        {% endfor %}
+                        <ul class="list-group list-group-flush">
+                            {% for category in categorys %}
+                                <li class="list-group-item">
+                                    <a href="{{ path('show_subject', {'title': category.title }) }}">{{ category.title }}</a>
+                                </li>
+                            {% endfor %}
+                        </ul>
                     {% endif %}
                 {% else %}
                     <p>Pas de catégories</p>
