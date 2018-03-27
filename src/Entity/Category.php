@@ -99,7 +99,7 @@ class Category
     }
 
     /**
-     * @return mixed
+     * @return ArrayCollection|Subject[]
      */
     public function getSubjects()
     {
@@ -111,6 +111,10 @@ class Category
      */
     public function addSubject($subject)
     {
+        if($this->subjects->contains($subject))
+        {
+            return;
+        }
         $this->subjects[] = $subject;
     }
 
