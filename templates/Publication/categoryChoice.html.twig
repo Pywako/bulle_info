@@ -18,12 +18,15 @@
         Classons notre ressource pour la retrouver facilement
     </h4>
     {{ form_start(form) }}
+    {{ form_errors(form.title_category) }}
     {{ form_row(form.title_category) }}
     <p>
         Puis choisissez un sujet ou créez en un nouveau.
     </p>
-    <button type="submit" class="btn btn-success" name="create">Créer</button>
-    <button type="submit" class="btn btn-success" name="select">Sélectionner</button>
+    {{ form_errors(form.subject_type) }}
+    {{ form_row(form.subject_type) }}
+
+    <button type="submit" class="btn btn-success">Suivant</button>
     {{ form_end(form) }}
 
 {% endblock %}

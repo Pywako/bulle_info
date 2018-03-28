@@ -60,10 +60,11 @@ class PublicationController extends Controller
                 $categorys = $formData['title_category'];
                 $publicationManager->setInSession('categorys', $categorys);
 
-                if (isset($_POST['create'])){
+                $subject_type = $formData['subject_type'];
+                if ($subject_type == true){
                     $this->redirectToRoute('publication_create_subject');
                 }
-                if (isset($_POST['select'])){
+                if ($subject_type == false){
                     $this->redirectToRoute('publication_select_subject');
                 }
             }
