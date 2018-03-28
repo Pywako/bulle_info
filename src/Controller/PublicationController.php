@@ -8,7 +8,9 @@ namespace App\Controller;
 use App\Entity\Resource;
 use App\Entity\Subject;
 use App\Form\Type\CategorySubjectType;
+use App\Form\Type\CreateSubjectType;
 use App\Form\Type\ResourceType;
+use App\Form\Type\SelectSubjectType;
 use App\Service\PublicationManager;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Security;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
@@ -56,28 +58,17 @@ class PublicationController extends Controller
                 $formData = $form->getData();
 
                 $categorys = $formData['title_category'];
-                if (!empty($formData['title_subject_text'])) {
-                    $subject = new Subject();
-                    $publicationManager->hydrateSubject($subject, $formData['title_subject_text']);
-                } elseif (!empty($formData['title_subject'])) {
-                    $subject = $formData['title_subject'];
-                    $publicationManager->hydrateSubject($subject, $formData['title_subject']->getTitle());
-                } else {
-                    $this->addFlash('warning', 'Veuillez choisir ou entrer un sujet');
-                    return $this->redirectToRoute('publication_step2');
+                $publicationManager->setInSession('categorys', $categorys);
+
+                if (isset($_POST['create'])){
+                    $this->redirectToRoute('publication_create_subject');
                 }
-                $resource = $publicationManager->getDataInSession('resource');
-
-                $publicationManager->prepareEntitiesToPublish($resource, $subject, $categorys);
-                $publicationManager->pushEntitiesToDatabase($resource, $subject, $categorys);
-
-                $session->remove('resource');
-
-                $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
-                return $this->redirectToRoute('homepage');
+                if (isset($_POST['select'])){
+                    $this->redirectToRoute('publication_select_subject');
+                }
             }
         } else {
-            $this->addFlash('danger', 'Veuillez entrer votre ressource en premier ;) ');
+            $this->addFlash('danger', 'Veuillez créer votre ressource');
             return $this->redirectToRoute('publication_step1');
         }
         return $this->render(
@@ -87,20 +78,113 @@ class PublicationController extends Controller
     }
 
     /**
+     * @Route("/publication/create", name="publication_create_subject")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function CreateSubjectAction(Request $request, PublicationManager $publicationManager)
+    {
+        if ($publicationManager->getDataInSession('resource')) {
+            if ($publicationManager->getDataInSession('categorys')) {
+                $subject = new Subject();
+                $form = $this->createForm(CreateSubjectType::class, $subject);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+
+                    $publicationManager->hydrateSubject($subject);
+                    $publicationManager->setInSession('subject', $subject);
+
+                    $this->redirectToRoute('publication_publish');
+                }
+            } else {
+                $this->addFlash('danger', 'Veuillez sélectionner une catégorie');
+                return $this->redirectToRoute('publication_step2');
+            }
+        } else {
+            $this->addFlash('danger', 'Veuillez créer votre ressource');
+            return $this->redirectToRoute('publication_step1');
+        }
+        return $this->render(
+            'Publication/createSubject.html.twig', array(
+                'categorys' => $publicationManager->getDataInSession('categorys'),
+                'form' => $form->createView()
+        ));
+    }
+
+    /**
+     * @Route("/publication/select", name="publication_select_subject")
+     * @Security("has_role('ROLE_USER')")
+     */
+    public function SelectSubjectAction(Request $request, PublicationManager $publicationManager)
+    {
+        if ($publicationManager->getDataInSession('resource')) {
+            if ($publicationManager->getDataInSession('categorys')) {
+                $form = $this->createForm(SelectSubjectType::class);
+                $form->handleRequest($request);
+
+                if ($form->isSubmitted() && $form->isValid()) {
+                    $formData = $form->getData();
+                    $subject = $formData['title'];
+
+                    $publicationManager->setInSession('subject', $subject);
+                    $this->redirectToRoute('publication_publish');
+                }
+            } else {
+                $this->addFlash('danger', 'Veuillez sélectionner une catégorie');
+                return $this->redirectToRoute('publication_step2');
+            }
+        } else {
+            $this->addFlash('danger', 'Veuillez créer votre ressource');
+            return $this->redirectToRoute('publication_step1');
+        }
+        return $this->render(
+            'Publication/selectSubject.html.twig', array(
+                'categorys' => $publicationManager->getDataInSession('categorys'),
+                'form' => $form->createView()
+        ));
+    }
+
+    /**
      *
-     * @Route("/publication/3", name="publication_step3")
+     * @Route("/publication/publication", name="publication_publish")
      * @Security("has_role('ROLE_USER')")
      */
     Public
     function PublishAction(Request $request, SessionInterface $session, PublicationManager $publicationManager)
     {
-        $category = $publicationManager->getDataInSession('category');
-        $subject = $publicationManager->getDataInSession('subject');
-        $resource = $publicationManager->getDataInSession('resource');
+        if ($publicationManager->getDataInSession('resource')) {
+            if ($publicationManager->getDataInSession('categorys')) {
+                if ($publicationManager->getDataInSession('subject')) {
+                    $categorys = $publicationManager->getDataInSession('categorys');
+                    $subject = $publicationManager->getDataInSession('subject');
+                    $resource = $publicationManager->getDataInSession('resource');
+
+                    if ($request->isMethod('POST')) {
+
+                        $publicationManager->prepareEntitiesToPublish($resource, $subject, $categorys);
+                        $publicationManager->pushEntitiesToDatabase($resource, $subject, $categorys);
+
+                        $session->remove('resource');
+
+                        $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
+                        return $this->redirectToRoute('homepage');
+                    }
+                } else {
+                    $this->addFlash('danger', 'Veuillez créer ou sélectionner un sujet');
+                    return $this->redirectToRoute('publication_step2');
+                }
+            } else {
+                $this->addFlash('danger', 'Veuillez sélectionner une catégorie');
+                return $this->redirectToRoute('publication_step2');
+            }
+        } else {
+            $this->addFlash('danger', 'Veuillez créer votre ressource');
+            return $this->redirectToRoute('publication_step1');
+        }
 
         return $this->render(
             'Publication/publish.html.twig', [
-                'category' => $category,
+                'categorys' => $categorys,
                 'subject' => $subject,
                 'resource' => $resource
             ]

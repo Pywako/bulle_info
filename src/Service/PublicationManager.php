@@ -45,16 +45,15 @@ class PublicationManager
         $this->dateManager->setDateToNow('update', $entity);
     }
 
-    public function hydrateSubject(Subject $subject, $title)
+    public function hydrateSubject(Subject $subject)
     {
-        $subject->setTitle($title);
         $this->setCreationAndUpdateDateToNow($subject);
         $subject->setUser($this->user);
     }
 
     public function hydrateResource(Resource $resource, $subject = null)
     {
-        if ($subject) {
+        if ($subject != null) {
             $resource->setSubject($subject);
         }
         $this->setCreationAndUpdateDateToNow($resource);
