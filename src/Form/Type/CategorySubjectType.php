@@ -27,9 +27,6 @@ class CategorySubjectType extends AbstractType
                 'multiple' => true,
                 'placeholder' => '',
             ])
-            ->add('title_subject_text', TextType::class, [
-                'label' => 'Nouveau sujet',
-            ])
         ;
     }
 
