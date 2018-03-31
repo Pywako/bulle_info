@@ -19,7 +19,7 @@ class Subject
     private $id;
 
     /**
-     * @ORM\Column(type="string", length=100)
+     * @ORM\Column(type="string", length=100, unique=true)
      */
     private $title;
 
@@ -39,7 +39,7 @@ class Subject
     private $user;
 
     /**
-     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="subject")
+     * @ORM\OneToMany(targetEntity="App\Entity\Resource", mappedBy="subject", cascade={"remove"})
      */
     private $resources;
 
