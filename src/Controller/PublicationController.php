@@ -6,9 +6,7 @@ namespace App\Controller;
 
 
 use App\Entity\Resource;
-use App\Entity\Subject;
 use App\Form\Type\CategorySubjectType;
-use App\Form\Type\CreateSubjectType;
 use App\Form\Type\ResourceType;
 use App\Form\Type\SelectSubjectType;
 use App\Service\PublicationManager;
@@ -67,28 +65,36 @@ class PublicationController extends Controller
         }
         return $this->render(
             'Publication/categoryChoice.html.twig', array(
-            'form' => $form->createView()
+            'form' => $form->createView(),
         ));
     }
 
     /**
-     * @Route("/publication/create", name="publication_create_subject")
+     * @Route("/publication/sujet", name="publication_step3")
      * @Security("has_role('ROLE_USER')")
      */
-    public function CreateSubjectAction(Request $request, PublicationManager $publicationManager)
+    public function CreateSubjectAction(Request $request, SessionInterface $session, PublicationManager $publicationManager)
     {
         if ($publicationManager->getDataInSession('resource')) {
             if ($publicationManager->getDataInSession('categorys')) {
-                $subject = new Subject();
-                $form = $this->createForm(CreateSubjectType::class, $subject);
+                $categorys = $publicationManager->getDataInSession('categorys');
+                foreach ($categorys as $category) {
+                    $subject_list = $category->getSubjects();
+                    $subject_title[] = $subject_list;
+                }
+                dump($subject_title);
+
+                $form = $this->createForm(SelectSubjectType::class);
                 $form->handleRequest($request);
 
                 if ($form->isSubmitted() && $form->isValid()) {
+                    $data = $form->getData();
+                    $subject = $data['subject'];
 
                     $publicationManager->hydrateSubject($subject);
                     $publicationManager->setInSession('subject', $subject);
 
-                    $this->redirectToRoute('publication_publish');
+                    return $this->redirectToRoute('publication_publish');
                 }
             } else {
                 $this->addFlash('danger', 'Veuillez sélectionner une catégorie');

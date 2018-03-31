@@ -17,11 +17,12 @@
     <h4>
         Classons notre ressource pour la retrouver facilement
     </h4>
+
     {{ form_start(form) }}
+
     {{ form_errors(form.title_category) }}
     {{ form_row(form.title_category) }}
 
-    <button type="submit" class="btn btn-success">Suivant</button>
+    <button type="submit" class="btn btn-success">Continuer</button>
     {{ form_end(form) }}
-
 {% endblock %}

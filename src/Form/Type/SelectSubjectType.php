@@ -15,10 +15,12 @@ class SelectSubjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('title', EntityType::class, [
-                'class' => Subject::class,
+            ->add('subject_title', EntityType::class, [
                 'label' => 'Titre du sujet',
-                'choices' => $options
+                'class' => Subject::class,
+                'choice_label' => 'title',
+                'placeholder' =>"",
+                'multiple' => false,
             ] );
     }
 }
