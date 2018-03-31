@@ -20,43 +20,8 @@
     {{ form_start(form) }}
     {{ form_errors(form.title_category) }}
     {{ form_row(form.title_category) }}
-    <p>
-        Puis choisissez un sujet ou créez en un nouveau.
-    </p>
-    {{ form_errors(form.subject_type) }}
-    {{ form_row(form.subject_type) }}
 
     <button type="submit" class="btn btn-success">Suivant</button>
     {{ form_end(form) }}
-
-{% endblock %}
-{% block javascripts %}
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
-            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
-            crossorigin="anonymous"></script>
-    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
-            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
-            crossorigin="anonymous"></script>
-    <script>
-        $(document).ready(function () {
-            var $category = $('#category_subject_title_category');
-            $category.change(function () {
-                var $form = $(this).closest('form');
-                var data = {};
-                data[$category.attr('name')] = $category.val();
-                $.ajax({
-                    url: $form.attr('action'),
-                    type: $form.attr('method'),
-                    data: data,
-                    success: function (html) {
-                        $('category_subject_title_subject').replaceWith(
-                            $(html).find('category_subject_title_subject')
-                        );
-                    }
-                });
-            });
-        });
-    </script>
 
 {% endblock %}
