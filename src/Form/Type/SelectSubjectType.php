@@ -5,9 +5,8 @@
 namespace App\Form\Type;
 
 
-use App\Entity\Subject;
-use Symfony\Bridge\Doctrine\Form\Type\EntityType;
 use Symfony\Component\Form\AbstractType;
+use Symfony\Component\Form\Extension\Core\Type\TextType;
 use Symfony\Component\Form\FormBuilderInterface;
 
 class SelectSubjectType extends AbstractType
@@ -15,12 +14,8 @@ class SelectSubjectType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options)
     {
         $builder
-            ->add('subject_title', EntityType::class, [
+            ->add('subject_title', TextType::class, [
                 'label' => 'Titre du sujet',
-                'class' => Subject::class,
-                'choice_label' => 'title',
-                'placeholder' =>"",
-                'multiple' => false,
             ] );
     }
 }
