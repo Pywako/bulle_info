@@ -51,9 +51,9 @@ class PublicationController extends Controller
     {
         if (!empty($session->get('resource'))) {
             $subjectList = $this->getDoctrine()->getRepository(Subject::class)->findAll();
-            $subject_title_List = "";
+            $subject_title_List = [];
             foreach ($subjectList as $subject) {
-                $subject_title_List[] = $subject->getTitle();
+                $subject_title_List = array_push($subject_title_List, $subject->getTitle());
             }
             $form = $this->createForm(SelectSubjectType::class);
             $form->handleRequest($request);
@@ -67,9 +67,11 @@ class PublicationController extends Controller
                 if (!empty($subject_repository->findBy(['title' => $subject_title])) && $subject_repository->findBy(['title' => $subject_title]) != []) {
                     $resource = $publicationManager->getDataInSession('resource');
                     $subject_title = $publicationManager->getDataInSession('subject_title');
-                    $subject = $this->getDoctrine()->getRepository(Subject::class)
+                    $subject_array = $this->getDoctrine()->getRepository(Subject::class)
                         ->findBy(['title' => $subject_title]);
-                    $categorys = $subject->getCategorys();
+                    foreach ($subject_array as $subject){
+                        $categorys = $subject->getCategorys();
+                    }
 
                     $publicationManager->prepareEntitiesToPublish($resource, $subject);
                     $publicationManager->pushEntitiesToDatabase($resource, $subject, $categorys);
