@@ -61,11 +61,14 @@ class PublicationManager
 
     }
 
-    public function prepareEntitiesToPublish(Resource $resource, Subject $subject, $categorys)
+    public function prepareEntitiesToPublish(Resource $resource, Subject $subject, $categorys = null)
     {
         $this->hydrateResource($resource, $subject);
-        foreach ($categorys as $category) {
-            $category->addSubject($subject);
+        $this->hydrateSubject($subject);
+        if ($categorys != null) {
+            foreach ($categorys as $category) {
+                $category->addSubject($subject);
+            }
         }
         $resource->setSubject($subject);
     }
