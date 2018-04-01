@@ -84,7 +84,7 @@ class PublicationController extends Controller
                     return $this->redirectToRoute('homepage');
                 } else {
                     $publicationManager->setInSession('subject_title', $subject_title);
-                    return $this->redirectToRoute('publication_category');
+                    return $this->redirectToRoute('publication_step3');
                 }
             }
         } else {
@@ -99,7 +99,7 @@ class PublicationController extends Controller
     }
 
     /**
-     * @Route("/publication/categorie", name="publication_category")
+     * @Route("/publication/categorie", name="publication_step3")
      * @Security("has_role('ROLE_USER')")
      */
     public function CreateSubjectAction(Request $request, SessionInterface $session, PublicationManager $publicationManager)
