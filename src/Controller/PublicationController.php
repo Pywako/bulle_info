@@ -39,7 +39,10 @@ class PublicationController extends Controller
             return $this->redirectToRoute('publication_step2');
         }
         return $this->render(
-            'Publication/resourcePreparation.html.twig', array('form' => $form->createView())
+            'Publication/resourcePreparation.html.twig', array(
+                'form' => $form->createView(),
+                'path' => 'publication'
+            )
         );
     }
 
@@ -94,7 +97,8 @@ class PublicationController extends Controller
         return $this->render(
             'Publication/store.html.twig', array(
             'form' => $form->createView(),
-            'subjectList' => $subject_title_List
+            'subjectList' => $subject_title_List,
+            'path' => 'publication'
         ));
     }
 
@@ -131,6 +135,7 @@ class PublicationController extends Controller
         return $this->render(
             'Publication/createSubject.html.twig', array(
             'form' => $form->createView(),
+            'path' => 'publication'
         ));
     }
 }

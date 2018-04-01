@@ -24,19 +24,22 @@
                     </button>
                     <div class="collapse navbar-collapse" id="navbarSupportedContent">
                         <ul class="navbar-nav mr-auto">
-                            <li class="nav-item active">
-                                <a class="nav-link" href="{{ path('homepage') }}">Accueil<span class="sr-only">(current)</span></a>
-                            </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="{{ path('show') }}">Explorer</a>
+                                <a class="nav-link {% if path == 'show' %}active{% endif %}" href="{{ path('show') }}">
+                                    Explorer
+                                </a>
                             </li>
                             {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('publication_step1') }}">Publier</a>
+                                    <a class="nav-link {% if path == 'publication' %}active{% endif %}" href="{{ path('publication_step1') }}">
+                                        Publier
+                                    </a>
                                 </li>
                                 {% if is_granted('ROLE_USER') %}
                                     <li class="nav-item">
-                                        <a class="nav-link" href="{{ path('user_info') }}">Mon Compte</a>
+                                        <a class="nav-link  {% if path == 'change_info' %}active{% endif %}" href="{{ path('user_info') }}">
+                                            Mon Compte
+                                        </a>
                                     </li>
                                     <li class="nav-item">
                                         <a class="nav-link" href="{{ path('deconnexion') }}">Déconnexion</a>
@@ -44,10 +47,14 @@
                                 {% endif %}
                             {% else %}
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('connexion') }}">Connexion</a>
+                                    <a class="nav-link {% if path == 'login' %}active{% endif %}" href="{{ path('connexion') }}">
+                                        Connexion
+                                    </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a class="nav-link" href="{{ path('user_registration') }}">Inscription</a>
+                                    <a class="nav-link {% if path == 'registration' %}active{% endif %}" href="{{ path('user_registration') }}">
+                                        Inscription
+                                    </a>
                                 </li>
                             {% endif %}
                         </ul>

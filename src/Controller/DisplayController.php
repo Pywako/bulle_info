@@ -28,7 +28,8 @@ class DisplayController extends Controller
 
         return $this->render('Display/show.html.twig', [
             'categorys' => $categorys,
-            'subjects' => $subjects
+            'subjects' => $subjects,
+            'path' => 'show'
         ]);
     }
 
@@ -42,7 +43,8 @@ class DisplayController extends Controller
         return $this->render('Display/showSubject.html.twig', [
             'subjects' => $subjects,
             'categorys' => $session->get('categorys'),
-            'current_category' => $category->getTitle()
+            'current_category' => $category->getTitle(),
+            'path' => 'show'
         ]);
     }
 

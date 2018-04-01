@@ -13,7 +13,7 @@
 {% endblock %}
 
 {% block main %}
-    <div>
+    <div class="container">
         {% if error %}
             <div class="alert alert-danger">
                 <div>{{ error.messageKey|trans(error.messageData, 'security') }}</div>

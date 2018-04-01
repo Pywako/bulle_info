@@ -44,7 +44,8 @@ class ChangeUserInfoController extends Controller
         }
         return $this->render('ChangeUserInfo/changeUserInfo.html.twig', [
             'form'       => $form->createView(),
-            'user_email' => $userEmail
+            'user_email' => $userEmail,
+            'path' => 'change_info'
         ]);
     }
 }

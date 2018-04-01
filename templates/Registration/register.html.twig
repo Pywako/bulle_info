@@ -12,14 +12,17 @@
     </nav>
 {% endblock %}
 {% block main %}
-{{ form_start(form) }}
-    {{ form_row(form.userName) }}
-    {{ form_row(form.email) }}
-    {{ form_row(form.plainPassword.first) }}
-    {{ form_row(form.plainPassword.second) }}
-    {{ form_row(form.termsAccepted) }}
+    <div class="container">
+        {{ form_start(form) }}
+        {{ form_row(form.userName) }}
+        {{ form_row(form.email) }}
+        {{ form_row(form.plainPassword.first) }}
+        {{ form_row(form.plainPassword.second) }}
+        {{ form_row(form.termsAccepted) }}
 
-    <button type="submit" class="btn btn-primary">S'inscrire</button>
+        <button type="submit" class="btn btn-primary">S'inscrire</button>
 
-{{ form_end(form) }}
+        {{ form_end(form) }}
+    </div>
+
 {% endblock %}
