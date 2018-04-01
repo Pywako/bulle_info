@@ -1,0 +1,56 @@
+{% if subjects is defined %}
+    {% if subjects is not null %}
+        {% for subject in subjects %}
+            <div class="card subject-card">
+                <div class="card-body">
+                    <h5 class="card-title">{{ subject.title }}</h5>
+
+                    <div id="carousel-{{ subject.id }}" class="carousel slide" data-ride="carousel" data-interval="false">
+                        <div class="carousel-inner justify-content-center">
+                            {% for resource in subject.resources %}
+                                {% if loop.index == loop.first %}
+                                    <div class="subject_item carousel-item active">
+                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title }}</a>
+                                        </h6>
+                                        {% if resource.summary is defined %}
+                                            {% if resource.summary is not null %}
+                                                <p class="text-center">{{ resource.summary }}</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                {% else %}
+                                    <div class="subject_item carousel-item">
+                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title }}</a>
+                                        </h6>
+                                        {% if resource.summary is defined %}
+                                            {% if resource.summary is not null %}
+                                                <p class="text-center">{{ resource.summary }}</p>
+                                            {% endif %}
+                                        {% endif %}
+                                    </div>
+                                {% endif %}
+                            {% endfor %}
+                        </div>
+                        <a class="carousel-control-prev" href="#carousel-{{ subject.id }}" role="button"
+                           data-slide="prev">
+                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Précédent</span>
+                        </a>
+                        <a class="carousel-control-next" href="#carousel-{{ subject.id }}" role="button"
+                           data-slide="next">
+                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                            <span class="sr-only">Suivant</span>
+                        </a>
+                    </div>
+
+                    <p class="card-text">Sujet ajouté par : {{ subject.user.username }} | Dernière mise à
+                        jour {{ subject.updateDate|date("d/m/Y") }}</p>
+                </div>
+            </div>
+        {% endfor %}
+    {% else %}
+        <p>Aucun sujet sélectionnés</p>
+    {% endif %}
+{% else %}
+    <p>Aucun sujet sélectionnés</p>
+{% endif %}

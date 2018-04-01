@@ -1,0 +1,21 @@
+{% block category %}
+    {% if categorys is defined %}
+        {% if categorys is not null %}
+            <div class="list-group">
+                {% for category in categorys %}
+                    {% if current_category is defined %}
+                        {% if  current_category == category.title %}
+                            <a href="{{ path('show_subject', {'title': category.title }) }}" class="list-group-item list-group-item-action active">{{ category.title }}</a>
+                        {% else %}
+                            <a href="{{ path('show_subject', {'title': category.title }) }}" class="list-group-item list-group-item-action">{{ category.title }}</a>
+                        {% endif %}
+                    {% else %}
+                        <a href="{{ path('show_subject', {'title': category.title }) }}" class="list-group-item list-group-item-action">{{ category.title }}</a>
+                    {% endif %}
+                {% endfor %}
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Pas de catégories</p>
+    {% endif %}
+{% endblock %}
