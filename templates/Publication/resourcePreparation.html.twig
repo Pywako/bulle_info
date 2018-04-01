@@ -12,19 +12,22 @@
     </nav>
 {% endblock %}
 {% block main %}
-    <h2>Bienvenue dans l'interface de publication</h2>
-    <h4>
-        Commençons par créer votre ressource
-    </h4>
 
-    {{ form_start(form) }}
+    <div class="container">
+        <h2>Bienvenue dans l'interface de publication</h2>
+        <h4>
+            Commençons par créer votre ressource
+        </h4>
 
-    {{ form_row(form.title) }}
-    {{ form_row(form.summary) }}
-    {{ form_row(form.link) }}
-    {{ form_row(form.tag) }}
+        {{ form_start(form) }}
 
-    <button type="submit" class="btn btn-success">Continuer</button>
+        {{ form_row(form.title) }}
+        {{ form_row(form.summary) }}
+        {{ form_row(form.link) }}
+        {{ form_row(form.tag) }}
 
-    {{ form_end(form) }}
+        <button type="submit" class="btn btn-success">Continuer</button>
+
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
