@@ -28,11 +28,11 @@
                     <li class="nav-item">
                         {% if path == 'show' %}
                             <div class="nav-link active">
-                                Publier
+                                Explorer
                             </div>
                         {% else %}
                             <a class="nav-link" href="{{ path('show') }}">
-                                Publier
+                                Explorer
                             </a>
                         {% endif %}
                     </li>
@@ -94,25 +94,28 @@
         </div>
     </nav>
     <div id="header_img">
-        <img src="">
+        {% block header_img %}
+            <img src="">
+        {% endblock %}
     </div>
 </header>
 <main>
     <div class="container-fluid">
-        <h1 class="text-center">
+        <div class="text-center row h-25">
             {% block h1 %}{% endblock %}
-        </h1>
-
-        {% for label, messages in app.flashes %}
-            {% for message in messages %}
-                <div class="alert alert-{{ label }}" role="alert">
-                    {{ message }}
-                </div>
+        </div>
+        <div class="container">
+            {% for label, messages in app.flashes %}
+                {% for message in messages %}
+                    <div class="alert alert-{{ label }}" role="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
             {% endfor %}
-        {% endfor %}
 
-        {% block breadcrumbs %}{% endblock %}
+            {% block breadcrumbs %}{% endblock %}
 
+        </div>
         {% block main %}{% endblock %}
     </div>
 </main>
