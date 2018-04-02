@@ -1,6 +1,12 @@
 {% extends 'base.html.twig' %}
 {% block title %}Bulle d'info - consultation{% endblock %}
 
+{% block header_img %}
+<div id="header_img">
+    <div class="h-100" style="background-image: url('pictures/library3.jpg')"></div>
+</div>
+{% endblock %}
+
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
@@ -11,7 +17,7 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container">
+    <div class="container fond_color">
         <div class="row">
             <div class="col-3">
                 <h4>Catégories</h4>
@@ -20,7 +26,7 @@
                 </div>
             </div>
             <div class="col-9">
-                <h4>Sujects</h4>
+                <h4>Sujets</h4>
                 {% include 'Display/_subjec.html.twig' %}
             </div>
         </div>
