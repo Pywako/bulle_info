@@ -1,8 +1,8 @@
 {% extends 'base.html.twig' %}
 
-{% block title %} Changer de mot de passe {% endblock %}
+{% block title %}Changer de mot de passe{% endblock %}
 
-{% block h1 %} Changer de mot de passe {% endblock %}
+{% block h1 %}<h1 class="col-sm-12 my-auto">Changer de mot de passe</h1>{% endblock %}
 
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
@@ -13,12 +13,13 @@
     </nav>
 {% endblock %}
 {% block main %}
-    {{ form_start(form) }}
+    <div class="container">
+        {{ form_start(form) }}
 
-    <div>
-        <p><b>Email actuel :</b> {{ user_email }}</p>
-        <p>Souhaitez vous le changer?</p>
-    </div>
+        <div>
+            <p><b>Email actuel :</b> {{ user_email }}</p>
+            <p>Souhaitez vous le changer?</p>
+        </div>
         {{ form_errors(form.newEmail) }}
         {{ form_row(form.newEmail) }}
 
@@ -30,5 +31,6 @@
 
         <button type="submit" class="btn btn-primary">Mettre à jour</button>
 
-    {{ form_end(form) }}
+        {{ form_end(form) }}
+    </div>
 {% endblock %}
