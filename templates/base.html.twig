@@ -119,7 +119,11 @@
         {% block main %}{% endblock %}
     </div>
 </main>
-<footer>
+<footer class="footer">
+    <div class="container text-center">
+        <span class="text-muted">@2018 </span><span><a href="{{ path('mentions') }}" class="text-muted">Mentions légales</a></span>
+
+    </div>
 
 </footer>
 {% block javascripts %}

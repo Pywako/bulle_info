@@ -18,5 +18,14 @@ class MainController extends Controller
             'path' => 'homepage'
         ]);
     }
+    /**
+     * @Route("/mentions", name="mentions")
+     */
+    public function mentions()
+    {
+        return $this->render('Main/mentions.html.twig',[
+            'path' => 'mentions'
+        ]);
+    }
 
 }
