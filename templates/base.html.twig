@@ -1,96 +1,134 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="UTF-8">
-        <meta name="description" content="Plate-forme d'échange d'information pour les étudiants d'informatique">
-        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-        <meta http-equiv="x-ua-compatible" content="ie=edge">
-        <title>Bulle d'info - {% block title %}{% endblock %}</title>
-        {% block stylesheets %}
-            <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
-            <link rel="stylesheet" href="{{ asset('css/styles.css') }}" >
-        {% endblock %}
-    </head>
-    <body>
-        <header>
-            <!------------ Navbar ------------>
-            <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                <a class="navbar-brand" href="{{ path('homepage') }}">Bulle Info</a>
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Plate-forme d'échange d'information pour les étudiants d'informatique">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta http-equiv="x-ua-compatible" content="ie=edge">
+    <title>Bulle d'info - {% block title %}{% endblock %}</title>
+    {% block stylesheets %}
+        <link rel="stylesheet" href="{{ asset('darkly/bootstrap.css') }}">
+        <link rel="stylesheet" href="{{ asset('css/styles.css') }}">
+    {% endblock %}
+</head>
+<body>
+<header>
+    <!------------ Navbar ------------>
+    <nav class="navbar navbar-expand-lg navbar-dark bg-primary">
+        <a class="navbar-brand" href="{{ path('homepage') }}">Bulle Info</a>
+        <ul class="navbar-nav mr-auto">
+        </ul>
+        <div class="row text-right">
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
                 <ul class="navbar-nav mr-auto">
-                </ul>
-                <div class="row text-right">
-                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-                        <span class="navbar-toggler-icon"></span>
-                    </button>
-                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-                        <ul class="navbar-nav mr-auto">
-                            <li class="nav-item">
-                                <a class="nav-link {% if path == 'show' %}active{% endif %}" href="{{ path('show') }}">
-                                    Explorer
-                                </a>
-                            </li>
-                            {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
-                                <li class="nav-item">
-                                    <a class="nav-link {% if path == 'publication' %}active{% endif %}" href="{{ path('publication_step1') }}">
-                                        Publier
-                                    </a>
-                                </li>
-                                {% if is_granted('ROLE_USER') %}
-                                    <li class="nav-item">
-                                        <a class="nav-link  {% if path == 'change_info' %}active{% endif %}" href="{{ path('user_info') }}">
-                                            Mon Compte
-                                        </a>
-                                    </li>
-                                    <li class="nav-item">
-                                        <a class="nav-link" href="{{ path('deconnexion') }}">Déconnexion</a>
-                                    </li>
-                                {% endif %}
+                    <li class="nav-item">
+                        {% if path == 'show' %}
+                            <div class="nav-link active">
+                                Publier
+                            </div>
+                        {% else %}
+                            <a class="nav-link" href="{{ path('show') }}">
+                                Publier
+                            </a>
+                        {% endif %}
+                    </li>
+                    {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
+                        <li class="nav-item">
+                            {% if path == 'publication' %}
+                                <div class="nav-link active">
+                                    Publier
+                                </div>
                             {% else %}
-                                <li class="nav-item">
-                                    <a class="nav-link {% if path == 'login' %}active{% endif %}" href="{{ path('connexion') }}">
-                                        Connexion
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link {% if path == 'registration' %}active{% endif %}" href="{{ path('user_registration') }}">
-                                        Inscription
-                                    </a>
-                                </li>
+                                <a class="nav-link" href="{{ path('publication_step1') }}">
+                                    Publier
+                                </a>
                             {% endif %}
-                        </ul>
-                    </div>
+                        </li>
+                        {% if is_granted('ROLE_USER') %}
+                            <li class="nav-item">
+                                {% if path == 'change_info' %}
+                                    <div class="nav-link active">
+                                        Mon Compte
+                                    </div>
+                                {% else %}
+                                    <a class="nav-link" href="{{ path('user_info') }}">
+                                        Mon Compte
+                                    </a>
+                                {% endif %}
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ path('deconnexion') }}">Déconnexion</a>
+                            </li>
+                        {% endif %}
+                    {% else %}
+                        <li class="nav-item">
+                            {% if path == 'login' %}
+                                <div class="nav-link active">
+                                    Connexion
+                                </div>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('connexion') }}">
+                                    Connexion
+                                </a>
+                            {% endif %}
+
+                        </li>
+                        <li class="nav-item">
+                            {% if path == 'registration' %}
+                                <div class="nav-link active">
+                                    Inscription
+                                </div>
+                            {% else %}
+                                <a class="nav-link" href="{{ path('user_registration') }}">
+                                    Inscription
+                                </a>
+                            {% endif %}
+                        </li>
+                    {% endif %}
+                </ul>
+            </div>
+        </div>
+    </nav>
+    <div id="header_img">
+        <img src="">
+    </div>
+</header>
+<main>
+    <div class="container-fluid">
+        <h1 class="text-center">
+            {% block h1 %}{% endblock %}
+        </h1>
+
+        {% for label, messages in app.flashes %}
+            {% for message in messages %}
+                <div class="alert alert-{{ label }}" role="alert">
+                    {{ message }}
                 </div>
-            </nav>
-            <div id="header_img" >
-                <img src="">
-            </div>
-        </header>
-        <main>
-            <div class="container-fluid">
-                <h1 class="text-center">
-                    {% block h1 %}{% endblock %}
-                </h1>
+            {% endfor %}
+        {% endfor %}
 
-                {% for label, messages in app.flashes %}
-                    {% for message in messages %}
-                        <div class="alert alert-{{ label }}" role="alert">
-                            {{ message }}
-                        </div>
-                    {% endfor %}
-                {% endfor %}
+        {% block breadcrumbs %}{% endblock %}
 
-                {% block breadcrumbs %}{% endblock %}
+        {% block main %}{% endblock %}
+    </div>
+</main>
+<footer>
 
-                {% block main %}{% endblock %}
-            </div>
-        </main>
-        <footer>
-
-        </footer>
-        {% block javascripts %}
-            <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-            <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-            <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-        {% endblock %}
-    </body>
+</footer>
+{% block javascripts %}
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+            integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+            crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"
+            integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+            crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"
+            integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+            crossorigin="anonymous"></script>
+{% endblock %}
+</body>
 </html>
