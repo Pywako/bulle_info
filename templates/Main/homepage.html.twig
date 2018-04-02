@@ -1,28 +1,35 @@
 {% extends 'base.html.twig' %}
 {% block title %} Accueil {% endblock %}
-
-{% block h1 %}Bulle d'info{% endblock %}
-
+{% block header_img %}{% endblock %}
 {% block main %}
 <div>
-    <div class="bloc text-center">
-        <h2>Un endroit pour trouver des réponses</h2>
-        <p>Trouver les informations qui vous conduiront aux solutions</p>
-        <hr class="hr_small">
+    <div class="bloc row h-1000 text-center" style="background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(48, 48, 48, 0.5)),
+    url('pictures/library1.jpg') ">
+        <div class="col-sm-12 my-auto">
+            <h2>Un endroit pour trouver des réponses</h2>
+            <p>Trouver les informations qui vous conduiront aux solutions</p>
+        </div>
     </div>
 
-    <div class="bloc text-center">
-        <h2>Un endroit pour se "ressourcer"</h2>
-        <p>Des ressources utilies et pertinantes.<br/>
-            pour aller encore plus loin</p>
-        <hr class="hr_small">
+    <div class="bloc row h-1000 text-center" style="background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(48, 48, 48, 0.5)),
+    url('pictures/coffee.jpg')">
+        <div class="col-sm-12 my-auto">
+            <h2>Un endroit pour se "ressourcer"</h2>
+            <p>Des ressources utilies et pertinantes.<br/>
+                pour aller encore plus loin</p>
+
+        </div>
+
     </div>
 
-    <div class="bloc text-center">
-        <h2>Un endroit pour partager</h2>
-        <p>Et si cet espace,<br/>
-            on le construisait ensemble?</p>
-        <hr class="hr_small">
+    <div class="bloc row h-1000 text-center" style="background-image: linear-gradient(rgba(255, 255, 255, 0.5), rgba(48, 48, 48, 0.5)),
+     url('pictures/together.jpg')">
+        <div class="col-sm-12 my-auto">
+            <h2>Un endroit pour partager</h2>
+            <p>Et si cet espace,<br/>
+                on le construisait ensemble?</p>
+        </div>
+
     </div>
 </div>
 
