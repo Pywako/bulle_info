@@ -7,10 +7,10 @@
                         {% if  current_category == category.title %}
                             <div class="list-group-item list-group-item-action active">{{ category.title|capitalize }}</div>
                         {% else %}
-                            <a href="{{ path('show_subject', {'title': category.title|capitalize }) }}" class="list-group-item list-group-item-action">{{ category.title }}</a>
+                            <a href="{{ path('show_subject', {'title': category.title|capitalize, 'page': 1 }) }}" class="list-group-item list-group-item-action">{{ category.title }}</a>
                         {% endif %}
                     {% else %}
-                        <a href="{{ path('show_subject', {'title': category.title|capitalize }) }}" class="list-group-item list-group-item-action">{{ category.title }}</a>
+                        <a href="{{ path('show_subject', {'title': category.title|capitalize, 'page': 1 }) }}" class="list-group-item list-group-item-action">{{ category.title }}</a>
                     {% endif %}
                 {% endfor %}
             </div>

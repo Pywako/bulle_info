@@ -4,6 +4,7 @@ namespace App\Repository;
 
 use App\Entity\Subject;
 use Doctrine\Bundle\DoctrineBundle\Repository\ServiceEntityRepository;
+use Doctrine\ORM\Tools\Pagination\Paginator;
 use Symfony\Bridge\Doctrine\RegistryInterface;
 
 /**
@@ -17,6 +18,14 @@ class SubjectRepository extends ServiceEntityRepository
     public function __construct(RegistryInterface $registry)
     {
         parent::__construct($registry, Subject::class);
+    }
+
+    public function findSubjects($page=1, $max = 10){
+        $qb= $this->createQueryBuilder('p');
+        $qb->setFirstResult(($page-1)*$max)
+            ->setMaxResults($max);
+
+        return new Paginator($qb);
     }
 
     /*

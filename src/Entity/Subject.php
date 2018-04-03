@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
  */
 class Subject
 {
+    const NUMBER_SUBJECT_DISPLAY_MAX = 10;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue
