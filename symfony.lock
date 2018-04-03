@@ -101,6 +101,9 @@
     "monolog/monolog": {
         "version": "1.23.0"
     },
+    "nikic/php-parser": {
+        "version": "v4.0.1"
+    },
     "ocramius/proxy-manager": {
         "version": "2.1.1"
     },
@@ -337,6 +340,9 @@
             "version": "3.3",
             "ref": "f8a63faa0d9521526499c0a8f403c9964ecb0527"
         }
+    },
+    "symfony/security-csrf": {
+        "version": "v4.0.7"
     },
     "symfony/serializer": {
         "version": "v4.0.6"
