@@ -20,10 +20,10 @@ use Symfony\Component\Routing\Annotation\Route;
 class PublicationController extends Controller
 {
     /**
-     * @Route("/publication/ressource", name="publication_step1")
+     * @Route("/publication/ressource/{subject}", defaults={"subject"="nouveau"}, name="publication_step1")
      * @Security("has_role('ROLE_USER')")
      */
-    public function ResourcePreparationAction(Request $request, PublicationManager $publicationManager)
+    public function ResourcePreparationAction(string $subject, Request $request, PublicationManager $publicationManager)
     {
         if (empty($publicationManager->getDataInSession('resource'))) {
             $resource = new Resource();
@@ -37,8 +37,31 @@ class PublicationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $resource->setTitle(strtolower($resource->getTitle()));
             $resource->setTag(strtolower($resource->getTag()));
-            $publicationManager->setInSession('resource', $resource);
-            return $this->redirectToRoute('publication_step2');
+
+            if(isset($subject) && $subject != "nouveau") // Ajout d'une ressource dans un sujet
+            {
+                $subject_title = $subject;
+                $subject_repository = $this->getDoctrine()->getRepository(Subject::class);
+
+                if (!empty($subject_repository->findBy(['title' => $subject_title])) && $subject_repository->findBy(['title' => $subject_title]) != []) {
+                    $subject_array = $this->getDoctrine()->getRepository(Subject::class)
+                        ->findBy(['title' => $subject_title]);
+                    foreach ($subject_array as $subject){
+                        $categorys = $subject->getCategorys();
+                    }
+
+                    $publicationManager->prepareEntitiesToPublish($resource, $subject);
+                    $publicationManager->pushEntitiesToDatabase($resource, $subject, $categorys);
+                    $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
+                    return $this->redirectToRoute('homepage');
+                }else{
+                    $this->addFlash('danger', 'Ce sujet n\'existe pas ;)');
+                    return $this->redirectToRoute('publication_step1');
+                }
+            }else{
+                $publicationManager->setInSession('resource', $resource);
+                return $this->redirectToRoute('publication_step2');
+            }
         }
         return $this->render(
             'Publication/resourcePreparation.html.twig', array(
