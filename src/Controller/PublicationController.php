@@ -56,7 +56,7 @@ class PublicationController extends Controller
             $subjectList = $this->getDoctrine()->getRepository(Subject::class)->findAll();
             $subject_title_List = [];
             foreach ($subjectList as $subject) {
-                $subject_title_List = array_push($subject_title_List, $subject->getTitle());
+                $subject_title_List[] = $subject->getTitle();
             }
             $form = $this->createForm(SelectSubjectType::class);
             $form->handleRequest($request);
