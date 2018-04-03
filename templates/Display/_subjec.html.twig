@@ -3,17 +3,17 @@
         {% for subject in subjects %}
             <div class="card subject-card">
                 <div class="card-body">
-                    <h5 class="card-title">{{ subject.title|capitalize }}</h5>
+                    <h4 class="card-title text-center">{{ subject.title|capitalize }}</h4>
 
-                    <div id="carousel-{{ subject.id }}" class="carousel slide" data-ride="carousel"
+                    <div id="carousel-{{ subject.id }}" class="carousel slide fond_color" data-ride="carousel"
                          data-interval="false">
                         <div class="carousel-inner justify-content-center">
                             {% for resource in subject.resources %}
                                 {% if loop.index == loop.first %}
                                     <div class="subject_item carousel-item active">
-                                        <h6 class="text-center">
+                                        <h5 class="text-center">
                                             <a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
-                                        </h6>
+                                        </h5>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
                                                 <div class="text-center w-75 mx-auto">
@@ -59,12 +59,14 @@
                     </div>
 
                     <div class="card-text row justify-content-between">
-                        <span class="col-4">Sujet ajouté par : {{ subject.user.username }}</span>
+                        <span class="col-10 col-sm-4">Sujet ajouté par : {{ subject.user.username }}</span>
+                        {% if (is_granted('IS_AUTHENTICATED_FULLY') or is_granted('IS_AUTHENTICATED_REMEMBERED')) %}
                         <span class="col-1">
                             <a href="{{ path('publication_step1', {'subject': subject.title }) }}">
                                 <i class="fas fa-plus" title="ajouter une resource à ce sujet"></i>
                             </a>
                         </span>
+                        {% endif %}
                     </div>
                 </div>
             </div>
