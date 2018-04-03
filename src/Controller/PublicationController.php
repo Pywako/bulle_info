@@ -23,7 +23,7 @@ class PublicationController extends Controller
      * @Route("/publication/ressource/{subject}", defaults={"subject"="nouveau"}, name="publication_step1")
      * @Security("has_role('ROLE_USER')")
      */
-    public function ResourcePreparationAction(string $subject, Request $request, PublicationManager $publicationManager)
+    public function ResourcePreparationAction(string $subject, Request $request, PublicationManager $publicationManager, SessionInterface $session)
     {
         if (empty($publicationManager->getDataInSession('resource'))) {
             $resource = new Resource();
@@ -37,6 +37,7 @@ class PublicationController extends Controller
         if ($form->isSubmitted() && $form->isValid()) {
             $resource->setTitle(strtolower($resource->getTitle()));
             $resource->setTag(strtolower($resource->getTag()));
+            $publicationManager->setInSession('resource', $resource);
 
             if(isset($subject) && $subject != "nouveau") // Ajout d'une ressource dans un sujet
             {
@@ -50,16 +51,18 @@ class PublicationController extends Controller
                         $categorys = $subject->getCategorys();
                     }
 
+                    $session->remove('resource');
+
                     $publicationManager->prepareEntitiesToPublish($resource, $subject);
                     $publicationManager->pushEntitiesToDatabase($resource, $subject, $categorys);
                     $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
-                    return $this->redirectToRoute('homepage');
+                    return $this->redirectToRoute('show_one_subject', ['title'=> $subject->getTitle()]);
                 }else{
                     $this->addFlash('danger', 'Ce sujet n\'existe pas ;)');
                     return $this->redirectToRoute('publication_step1');
                 }
             }else{
-                $publicationManager->setInSession('resource', $resource);
+
                 return $this->redirectToRoute('publication_step2');
             }
         }
@@ -109,7 +112,7 @@ class PublicationController extends Controller
                     $session->remove('subject_title');
 
                     $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
-                    return $this->redirectToRoute('homepage');
+                    return $this->redirectToRoute('show_one_subject', ['title'=> $subject->getTitle()]);
                 } else {
                     $publicationManager->setInSession('subject_title', $subject_title);
                     return $this->redirectToRoute('publication_step3');
@@ -151,7 +154,7 @@ class PublicationController extends Controller
                 $session->remove('resource');
 
                 $this->addFlash('success', 'Votre ressource a été ajouté avec succès ! ');
-                return $this->redirectToRoute('homepage');
+                return $this->redirectToRoute('show_one_subject', ['title'=> $subject->getTitle()]);
             }
         } else {
             $this->addFlash('danger', 'Veuillez créer votre ressource');
