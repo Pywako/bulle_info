@@ -29,7 +29,7 @@ class SecurityController extends Controller
 
         return $this->render('Security/login.html.twig', array(
             'form' => $form->createView(),
-            'error' => 'le nom d\'utilisateur ou mot de passe est incorrect, veuillez réessayer',
+            'error' => $error,
             'path' => 'login'
         ));
     }
