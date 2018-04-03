@@ -5,26 +5,37 @@
                 <div class="card-body">
                     <h5 class="card-title">{{ subject.title|capitalize }}</h5>
 
-                    <div id="carousel-{{ subject.id }}" class="carousel slide" data-ride="carousel" data-interval="false">
+                    <div id="carousel-{{ subject.id }}" class="carousel slide" data-ride="carousel"
+                         data-interval="false">
                         <div class="carousel-inner justify-content-center">
                             {% for resource in subject.resources %}
                                 {% if loop.index == loop.first %}
                                     <div class="subject_item carousel-item active">
-                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
+                                        <h6 class="text-center">
+                                            <a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
                                         </h6>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
-                                                <p class="text-center w-75 mx-auto">{{ resource.summary }}</p>
+                                                <div class="text-center w-75 mx-auto">
+                                                    <p>{{ resource.summary }}</p>
+                                                    <p>ajouté par : {{ resource.user.username }}
+                                                        le {{ resource.updateDate|date("d/m/Y") }}</p>
+                                                </div>
                                             {% endif %}
                                         {% endif %}
                                     </div>
                                 {% else %}
                                     <div class="subject_item carousel-item">
-                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
+                                        <h6 class="text-center">
+                                            <a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
                                         </h6>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
-                                                <p class="text-center w-75 mx-auto">{{ resource.summary }}</p>
+                                                <div class="text-center w-75 mx-auto">
+                                                    <p>{{ resource.summary }}</p>
+                                                    <p>ajouté par : {{ resource.user.username }}
+                                                        le {{ resource.updateDate|date("d/m/Y") }}</p>
+                                                </div>
                                             {% endif %}
                                         {% endif %}
                                     </div>
@@ -47,8 +58,14 @@
 
                     </div>
 
-                    <p class="card-text">Sujet ajouté par : {{ subject.user.username }} | Dernière mise à
-                        jour {{ subject.updateDate|date("d/m/Y") }}</p>
+                    <div class="card-text row justify-content-between">
+                        <span class="col-4">Sujet ajouté par : {{ subject.user.username }}</span>
+                        <span class="col-1">
+                            <a href="{{ path('publication_step1', {'subject': subject.title }) }}">
+                                <i class="fas fa-plus" title="ajouter une resource à ce sujet"></i>
+                            </a>
+                        </span>
+                    </div>
                 </div>
             </div>
         {% endfor %}
