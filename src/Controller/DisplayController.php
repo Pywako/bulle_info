@@ -6,6 +6,7 @@ namespace App\Controller;
 
 
 use App\Entity\Category;
+use App\Entity\Resource;
 use App\Entity\Subject;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
@@ -68,4 +69,24 @@ class DisplayController extends Controller
         ]);
     }
 
+    /**
+     * @Route("/show/resource/{title}/{page}", defaults={"page"=1}, name="show_one_subject")
+     */
+    public function ShowOneSubjectAction(Subject $subject, int $page)
+    {
+        $resources = $subject->getResources();
+        $pagination = [
+            'page' =>$page,
+            'route' => 'show_subject',
+            'page_count' =>ceil(count($resources)/Resource::NUMBER_RESOURCE_DISPLAY_MAX),
+            'route_params' => []
+        ];
+
+        return $this->render('Display/showOneSubject.html.twig', [
+           'resources' => $resources,
+            'path' => 'show',
+            'subject' => $subject,
+            'pagination' => $pagination
+        ]);
+    }
 }

@@ -11,6 +11,7 @@ use Doctrine\ORM\Mapping as ORM;
 class Resource
 {
     const DEFAULT_RELEVANCE = 0;
+    const NUMBER_RESOURCE_DISPLAY_MAX = 10;
     /**
      * @ORM\Id
      * @ORM\GeneratedValue

@@ -3,7 +3,11 @@
         {% for subject in subjects %}
             <div class="card subject-card">
                 <div class="card-body">
-                    <h4 class="card-title text-center">{{ subject.title|capitalize }}</h4>
+                    <h4 class="card-title text-center">
+                        <a href="{{ path('show_one_subject', {'title': subject.title, 'page': 1 }) }}">
+                            {{ subject.title|capitalize }}
+                        </a>
+                    </h4>
 
                     <div id="carousel-{{ subject.id }}" class="carousel slide fond_color" data-ride="carousel"
                          data-interval="false">

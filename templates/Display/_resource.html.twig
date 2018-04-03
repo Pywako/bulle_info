@@ -1,0 +1,23 @@
+{% if resources is defined %}
+    {% if resources is not null %}
+        {% for resource in resources %}
+            <div class="card subject-card">
+                <div class="card-body">
+                    <h4 class="card-title text-center"><a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
+                    </h4>
+                    <div class="justify-content-center">
+                        {% if resource.summary is defined %}
+                            {% if resource.summary is not null %}
+                                <div class="text-center w-75 mx-auto">
+                                    <p>{{ resource.summary }}</p>
+                                    <p>ajouté par : {{ resource.user.username }}
+                                        le {{ resource.updateDate|date("d/m/Y") }}</p>
+                                </div>
+                            {% endif %}
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        {% endfor %}
+    {% endif %}
+{% endif %}
