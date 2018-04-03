@@ -10,7 +10,7 @@
                             {% for resource in subject.resources %}
                                 {% if loop.index == loop.first %}
                                     <div class="subject_item carousel-item active">
-                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title }}</a>
+                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
                                         </h6>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
@@ -20,7 +20,7 @@
                                     </div>
                                 {% else %}
                                     <div class="subject_item carousel-item">
-                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title }}</a>
+                                        <h6 class="text-center"><a href="{{ resource.link }}">{{ resource.title|capitalize }}</a>
                                         </h6>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
