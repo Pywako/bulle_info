@@ -14,7 +14,7 @@
                                         </h6>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
-                                                <p class="text-center">{{ resource.summary }}</p>
+                                                <p class="text-center w-75 mx-auto">{{ resource.summary }}</p>
                                             {% endif %}
                                         {% endif %}
                                     </div>
@@ -24,23 +24,27 @@
                                         </h6>
                                         {% if resource.summary is defined %}
                                             {% if resource.summary is not null %}
-                                                <p class="text-center">{{ resource.summary }}</p>
+                                                <p class="text-center w-75 mx-auto">{{ resource.summary }}</p>
                                             {% endif %}
                                         {% endif %}
                                     </div>
                                 {% endif %}
+                                {% if loop.first != loop.last %}
+                                    <a class="carousel-control-prev" href="#carousel-{{ subject.id }}" role="button"
+                                       data-slide="prev">
+                                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Précédent</span>
+                                    </a>
+                                    <a class="carousel-control-next" href="#carousel-{{ subject.id }}" role="button"
+                                       data-slide="next">
+                                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                                        <span class="sr-only">Suivant</span>
+                                    </a>
+                                {% endif %}
+
                             {% endfor %}
                         </div>
-                        <a class="carousel-control-prev" href="#carousel-{{ subject.id }}" role="button"
-                           data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Précédent</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carousel-{{ subject.id }}" role="button"
-                           data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Suivant</span>
-                        </a>
+
                     </div>
 
                     <p class="card-text">Sujet ajouté par : {{ subject.user.username }} | Dernière mise à
