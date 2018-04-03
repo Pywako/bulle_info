@@ -69,7 +69,7 @@ class PublicationController extends Controller
 
                 if (!empty($subject_repository->findBy(['title' => $subject_title])) && $subject_repository->findBy(['title' => $subject_title]) != []) {
                     $resource = $publicationManager->getDataInSession('resource');
-                    $subject_title = $publicationManager->getDataInSession('subject_title');
+
                     $subject_array = $this->getDoctrine()->getRepository(Subject::class)
                         ->findBy(['title' => $subject_title]);
                     foreach ($subject_array as $subject){
