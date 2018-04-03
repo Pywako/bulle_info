@@ -35,6 +35,8 @@ class PublicationController extends Controller
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $resource->setTitle(strtolower($resource->getTitle()));
+            $resource->setTag(strtolower($resource->getTag()));
             $publicationManager->setInSession('resource', $resource);
             return $this->redirectToRoute('publication_step2');
         }
@@ -64,7 +66,7 @@ class PublicationController extends Controller
             if ($form->isSubmitted() && $form->isValid()) {
                 $formData = $form->getData();
 
-                $subject_title = $formData['subject_title'];
+                $subject_title = strtolower($formData['subject_title']);
                 $subject_repository = $this->getDoctrine()->getRepository(Subject::class);
 
                 if (!empty($subject_repository->findBy(['title' => $subject_title])) && $subject_repository->findBy(['title' => $subject_title]) != []) {
