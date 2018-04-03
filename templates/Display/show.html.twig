@@ -2,9 +2,9 @@
 {% block title %}Bulle d'info - consultation{% endblock %}
 
 {% block header_img %}
-<div id="header_img">
-    <div class="h-100" style="background-image: url('pictures/library3.jpg')"></div>
-</div>
+    <div id="header_img">
+        <div class="h-100" style="background-image: url('pictures/library3.jpg')"></div>
+    </div>
 {% endblock %}
 
 {% block breadcrumbs %}
@@ -17,16 +17,22 @@
 {% endblock %}
 
 {% block main %}
-    <div class="container fond_color">
+    <div class="btn-category d-block d-sm-none justify-content-center">
+        <div class="row justify-content-center">
+            {% include 'Display/_category_select.html.twig' %}
+        </div>
+    </div>
+
+    <div class="container">
         <div class="row">
-            <div class="col-3">
-                <h4>Catégories</h4>
+            <div class="col-md-3 d-none d-sm-block">
+                <h4 class="text-center">Catégories</h4>
                 <div>
                     {% include 'Display/_category.html.twig' %}
                 </div>
             </div>
-            <div class="col-9">
-                <h4>Sujets</h4>
+            <div class="col-12 col-md-9">
+                <h4 class="text-center">Sujets</h4>
                 {% include 'Display/_subjec.html.twig' %}
             </div>
         </div>

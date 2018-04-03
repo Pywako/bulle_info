@@ -1,0 +1,19 @@
+{% block category %}
+    {% if categorys is defined %}
+        {% if categorys is not null %}
+            <div class="btn-group">
+                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true"
+                        aria-expanded="false">
+                    Catégories
+                </button>
+                <div class="dropdown-menu">
+                    {% for category in categorys %}
+                            <a class="dropdown-item" href="{{ path('show_subject', {'title': category.title|capitalize }) }}">{{ category.title|capitalize }}</a>
+                    {% endfor %}
+                </div>
+            </div>
+        {% endif %}
+    {% else %}
+        <p>Pas de catégories</p>
+    {% endif %}
+{% endblock %}
