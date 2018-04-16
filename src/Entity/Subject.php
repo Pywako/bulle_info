@@ -27,12 +27,12 @@ class Subject
     /**
      * @ORM\Column(type="datetime", length=100)
      */
-    private $creation_date;
+    private $creationDate;
 
     /**
      * @ORM\Column(type="datetime", length=100)
      */
-    private $update_date;
+    private $updateDate;
 
     /**
      * @ORM\ManyToOne(targetEntity="App\Entity\User", inversedBy="subjects")
@@ -84,15 +84,15 @@ class Subject
      */
     public function getCreationDate()
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
     /**
-     * @param mixed $creation_date
+     * @param mixed $creationDate
      */
-    public function setCreationDate($creation_date): void
+    public function setCreationDate($creationDate): void
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creationDate;
     }
 
     /**
@@ -100,16 +100,17 @@ class Subject
      */
     public function getUpdateDate()
     {
-        return $this->update_date;
+        return $this->updateDate;
     }
 
     /**
-     * @param mixed $update_date
+     * @param mixed $updateDate
      */
-    public function setUpdateDate($update_date): void
+    public function setUpdateDate($updateDate): void
     {
-        $this->update_date = $update_date;
+        $this->updateDate = $updateDate;
     }
+
 
     /**
      * @return mixed

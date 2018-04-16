@@ -37,12 +37,12 @@ class Resource
     /**
      * @ORM\Column(type="datetime")
      */
-    private $creation_date;
+    private $creationDate;
 
     /**
      * @ORM\Column(type="datetime")
      */
-    private $update_date;
+    private $updateDate;
 
     /**
      * @ORM\Column(type="integer")
@@ -126,15 +126,15 @@ class Resource
      */
     public function getCreationDate()
     {
-        return $this->creation_date;
+        return $this->creationDate;
     }
 
     /**
-     * @param mixed $creation_date
+     * @param mixed $creationDate
      */
-    public function setCreationDate($creation_date): void
+    public function setCreationDate($creationDate): void
     {
-        $this->creation_date = $creation_date;
+        $this->creationDate = $creationDate;
     }
 
     /**
@@ -142,16 +142,17 @@ class Resource
      */
     public function getUpdateDate()
     {
-        return $this->update_date;
+        return $this->updateDate;
     }
 
     /**
-     * @param mixed $update_date
+     * @param mixed $updateDate
      */
-    public function setUpdateDate($update_date): void
+    public function setUpdateDate($updateDate): void
     {
-        $this->update_date = $update_date;
+        $this->updateDate = $updateDate;
     }
+
 
     /**
      * @return mixed
