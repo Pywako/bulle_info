@@ -29,6 +29,17 @@ class SubjectRepository extends ServiceEntityRepository
         return new Paginator($qb);
     }
 
+    public function findSubjectsByCategory($category_title, $page=1, $max = 10){
+        $qb= $this->createQueryBuilder('p');
+        $qb ->leftJoin('p.categorys', 'categorys')
+            ->where('categorys.title = :category_title')->setParameter('category_title', $category_title)
+            ->orderBy('p.updateDate', 'DESC')
+            ->setFirstResult(($page-1)*$max)
+            ->setMaxResults($max);
+
+        return new Paginator($qb);
+    }
+
     /*
     public function findBySomething($value)
     {
