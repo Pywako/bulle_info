@@ -22,7 +22,8 @@ class SubjectRepository extends ServiceEntityRepository
 
     public function findSubjects($page=1, $max = 10){
         $qb= $this->createQueryBuilder('p');
-        $qb->setFirstResult(($page-1)*$max)
+        $qb ->orderBy('p.updateDate', 'DESC')
+            ->setFirstResult(($page-1)*$max)
             ->setMaxResults($max);
 
         return new Paginator($qb);
