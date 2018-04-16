@@ -8,6 +8,7 @@ namespace App\Controller;
 use App\Entity\Category;
 use App\Entity\Resource;
 use App\Entity\Subject;
+use App\Service\PaginationService;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\Session\SessionInterface;
 use Symfony\Component\Routing\Annotation\Route;
@@ -15,9 +16,9 @@ use Symfony\Component\Routing\Annotation\Route;
 class DisplayController extends Controller
 {
     /**
-     * @Route("/show/{page}", defaults={"page"=1}, name="show")
+     * @Route("/exploration/{page}", defaults={"page"=1}, name="show")
      */
-    public function ShowAction(int $page, SessionInterface $session)
+    public function ShowAction(int $page, SessionInterface $session, PaginationService $paginationService)
     {
         $categorys = $this->getDoctrine()
             ->getRepository(Category::class)
@@ -30,12 +31,7 @@ class DisplayController extends Controller
             ->findSubjects($page, Subject::NUMBER_SUBJECT_DISPLAY_MAX);
         $session->set('categorys', $categorys);
 
-        $pagination = [
-            'page' =>$page,
-            'route' => 'show',
-            'page_count' =>ceil(count($subjectsTotal)/Subject::NUMBER_SUBJECT_DISPLAY_MAX),
-            'route_params' => []
-        ];
+        $pagination = $paginationService->returnPaginationArray($page, 'show', $subjectsTotal, Subject::NUMBER_SUBJECT_DISPLAY_MAX);
 
         return $this->render('Display/show.html.twig', [
             'categorys' => $categorys,
@@ -47,21 +43,17 @@ class DisplayController extends Controller
     }
 
     /**
-     * @Route("/show/subject/{title}/{page}", defaults={"title" = 0, "page" = 1}, name="show_subject")
+     * @Route("/exploration/sujet/{title}/{page}", defaults={"title" = 0, "page" = 1}, name="show_subject")
      */
-    public function ShowSubjectAction( Category $category, int $page, SessionInterface $session )
+    public function ShowSubjectAction(Category $category, int $page, SessionInterface $session, PaginationService $paginationService)
     {
-        $subjects = $category->getSubjects();
-
-        $pagination = [
-            'page' =>$page,
-            'route' => 'show_subject',
-            'page_count' =>ceil(count($subjects)/Subject::NUMBER_SUBJECT_DISPLAY_MAX),
-            'route_params' => []
-        ];
-
+        $subjects = $this->getDoctrine()
+            ->getRepository(Subject::class)
+            ->findSubjectsByCategory($category->getTitle(), $page, Subject::NUMBER_SUBJECT_DISPLAY_MAX);
+        $pagination = $paginationService->returnPaginationArray($page, 'show_subject', $subjects, Subject::NUMBER_SUBJECT_DISPLAY_MAX);
         return $this->render('Display/showSubject.html.twig', [
             'subjects' => $subjects,
+            'category_title' => $category->getTitle(),
             'categorys' => $session->get('categorys'),
             'current_category' => $category->getTitle(),
             'path' => 'show',
@@ -70,20 +62,18 @@ class DisplayController extends Controller
     }
 
     /**
-     * @Route("/show/resource/{title}/{page}", defaults={"page"=1}, name="show_one_subject")
+     * @Route("/exploration/unSujet/{title}/{page}", defaults={"title"=0, "page"=1}, name="show_one_subject")
      */
-    public function ShowOneSubjectAction(Subject $subject, int $page)
+    public function ShowOneSubjectAction(Subject $subject, int $page, PaginationService $paginationService)
     {
-        $resources = $subject->getResources();
-        $pagination = [
-            'page' =>$page,
-            'route' => 'show_subject',
-            'page_count' =>ceil(count($resources)/Resource::NUMBER_RESOURCE_DISPLAY_MAX),
-            'route_params' => []
-        ];
+        $resources = $this->getDoctrine()
+            ->getRepository(Resource::class)
+            ->findResourcesBySubject($subject->getTitle(), $page, Resource::NUMBER_RESOURCE_DISPLAY_MAX);
+        $pagination = $paginationService->returnPaginationArray($page, 'show_one_subject', $resources, Resource::NUMBER_RESOURCE_DISPLAY_MAX);
 
         return $this->render('Display/showOneSubject.html.twig', [
-           'resources' => $resources,
+            'resources' => $resources,
+            'subject_title' => $subject->getTitle(),
             'path' => 'show',
             'subject' => $subject,
             'pagination' => $pagination
