@@ -33,10 +33,14 @@
             </div>
             <div class="col-12 col-md-9">
                 <h4 class="text-center">Sujets</h4>
-                {% include 'Display/_subjec.html.twig' %}
+                {% block subject %}
+                    {% include 'Display/_subjec.html.twig' %}
+                {% endblock %}
 
                 {% if pagination.page_count > 1 %}
-                    {% include 'Display/_pagination.html.twig' %}
+                    {% block pagination %}
+                        {% include 'Display/_pagination.html.twig' %}
+                    {% endblock %}
                 {% elseif pagination.page_count == 1 %}
                 {% else %}
                     <p class="text-center fond_color"> Cette catégorie n'a pas encore de sujet.<br>

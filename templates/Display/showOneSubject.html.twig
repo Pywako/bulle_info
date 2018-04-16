@@ -30,9 +30,8 @@
                 <div class="row justify-content-end">
                     <p class="col-5">Crée par : {{ subject.user.username }}</p>
                 </div>
-
                 {% if pagination.page_count > 1 %}
-                    {% include 'Display/_pagination.html.twig' %}
+                    {% include 'Display/_pagination_one_subject.html.twig' %}
                 {% endif %}
 
             </div>

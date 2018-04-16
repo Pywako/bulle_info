@@ -1,10 +1,5 @@
 {% extends 'Display/show.html.twig' %}
 
-{% block header_img %}
-    <div id="header_img">
-        <div class="h-100" style="background-image: url('../pictures/library3.jpg')"></div>
-    </div>
-{% endblock %}
 
 {% block breadcrumbs %}
     <nav aria-label="breadcrumb">
@@ -20,4 +15,7 @@
     <div>
         {% include 'Display/_subjec.html.twig' %}
     </div>
+{% endblock %}
+{% block pagination %}
+    {% include 'Display/_pagination_all_subject.html.twig' %}
 {% endblock %}
